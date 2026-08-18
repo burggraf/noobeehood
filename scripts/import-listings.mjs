@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { readSeedFiles } from './listing-seed.mjs';
+import { listingPayloadMatches, readSeedFiles } from './listing-seed.mjs';
 
 const require = createRequire(new URL('../web/package.json', import.meta.url));
 const { default: PocketBase } = require('pocketbase');
@@ -48,7 +48,7 @@ try {
       continue;
     }
     const current = result.items[0];
-    const same = Object.keys(payload).every((key) => current[key] === payload[key]);
+    const same = listingPayloadMatches(current, payload);
     if (same) counts.unchanged++;
     else {
       snapshots.push(structuredClone(current));

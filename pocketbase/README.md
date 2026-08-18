@@ -51,7 +51,7 @@ pnpm --dir web run build
 test -f web/build/200.html
 ```
 
-`check:seeds` validates the ten committed listings and six search cases without network access. `test:unit` covers query/filter/date behavior. `check` runs Svelte diagnostics and `build` creates the static site; `web/build/200.html` is the SPA fallback artifact.
+`check:seeds` validates the ten committed listings plus search-case structure and listing references without network access; it does not execute searches. `seed:listings` executes all six search cases as live queries against PocketBase after importing. `test:unit` covers query/filter/date behavior. `check` runs Svelte diagnostics and `build` creates the static site; `web/build/200.html` is the SPA fallback artifact.
 
 ## Validate and import verified listings
 
@@ -76,7 +76,7 @@ PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \\
 unset PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
 ```
 
-Run the command twice. The first run must create 10 listings; the second must create 0 and report 10 unchanged (or updates if the database was edited). The importer also executes all six public search cases against the running API. Charter Manta intentionally has no phone, email, or boarding location pending conflict resolution; unsupported search cases return no results.
+Run the command twice. The first run must create 10 listings; the second must create 0 and report 10 unchanged (or updates if the database was edited). The importer also executes all six public search cases as live queries against the running API. Charter Manta intentionally has no phone, email, or boarding location pending conflict resolution; unsupported search cases return no results.
 
 ## Run the authorization security check
 

@@ -8,10 +8,25 @@ const FIELDS = new Set(['name', 'slug', 'category', 'listing_type', 'summary', '
 const REQUIRED = ['name', 'slug', 'category', 'listing_type', 'summary', 'source_url', 'verification_method', 'last_verified_at', 'status'];
 const LIMITS = { name: 160, slug: 160, listing_type: 120, summary: 500, location: 240, search_terms: 1000, phone: 80 };
 const OPTIONAL = ['location', 'search_terms', 'website', 'phone', 'next_review_at'];
+const DATE_FIELDS = new Set(['last_verified_at', 'next_review_at']);
 
 const fail = (message) => { throw new Error(message); };
 const validUrl = (value) => { try { const url = new URL(value); return ['http:', 'https:'].includes(url.protocol) && Boolean(url.host); } catch { return false; } };
 const validDate = (value) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false; const [year, month, day] = value.split('-').map(Number); const date = new Date(Date.UTC(year, month - 1, day)); return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day; };
+
+const normalizeComparisonValue = (field, value) => {
+  if (value === undefined || value === null || value === '') return '';
+  if (!DATE_FIELDS.has(field) || typeof value !== 'string') return value;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const timestamp = new Date(value.replace(' ', 'T'));
+  return Number.isNaN(timestamp.getTime()) ? value : timestamp.toISOString().slice(0, 10);
+};
+
+export function listingPayloadMatches(current, payload) {
+  return Object.entries(payload).every(([field, value]) => (
+    normalizeComparisonValue(field, current[field]) === normalizeComparisonValue(field, value)
+  ));
+}
 
 export function validateListings(records) {
   if (!Array.isArray(records)) fail('listings must be an array');

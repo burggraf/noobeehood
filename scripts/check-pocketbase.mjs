@@ -228,7 +228,7 @@ async function run() {
           }
         }
       }
-      if (cleanupFailed) console.warn("PocketBase security check cleanup failed");
+      if (cleanupFailed) throw new Error("PocketBase security check cleanup failed");
     }
   }
 }
