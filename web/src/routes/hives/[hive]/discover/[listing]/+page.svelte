@@ -94,7 +94,7 @@
 				<div><dt>Verified</dt><dd>{verificationLabels[listing.verification_method] ?? listing.verification_method}, {verifiedDate(listing.last_verified_at)}</dd></div>
 				{#if listing.source_url}<div><dt>Source</dt><dd><a href={listing.source_url} rel="noopener noreferrer">{listing.source_url}</a></dd></div>{/if}
 			</dl>
-			<aside class="detail-reminder"><strong>Confirm directly</strong><p>Details can change. Please confirm hours, availability, and contact information directly before you visit.</p></aside>
+			<aside class="detail-reminder"><strong>Confirm directly</strong><p>Details can change. Please confirm hours, availability, and contact information directly before you visit.</p><p>Inclusion in this directory is not an endorsement or recommendation.</p></aside>
 		</div>
 	{/if}
 </section>
