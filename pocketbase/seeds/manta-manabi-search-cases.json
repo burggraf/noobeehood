@@ -26,5 +26,11 @@
   {
     "query": "whale watching",
     "expected_slugs": []
+  },
+  {
+    "query": "airport",
+    "expected_slugs": [
+      "aeropuerto-internacional-eloy-alfaro"
+    ]
   }
 ]

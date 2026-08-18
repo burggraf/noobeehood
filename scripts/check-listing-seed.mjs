@@ -5,7 +5,7 @@ const root = new URL('../pocketbase/', import.meta.url);
 const files = await readSeedFiles(new URL('seeds/manta-manabi-listings.json', root), new URL('seeds/manta-manabi-search-cases.json', root));
 assert.equal(files.hive, 'manta-manabi');
 assert.equal(files.listings.length, 10);
-assert.equal(files.searchCases.length, 6);
+assert.equal(files.searchCases.length, 7);
 
 const valid = [{ name: 'Example', slug: 'example', category: 'food-shopping-dining', listing_type: 'shop', summary: 'A listing', location: 'Manta', search_terms: 'food', website: 'https://example.com', source_url: 'https://example.com/source', verification_method: 'source_checked', last_verified_at: '2026-08-18', next_review_at: '2026-11-18', status: 'published' }];
 assert.doesNotThrow(() => validateListings(valid));
