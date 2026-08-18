@@ -163,6 +163,6 @@ The major stack decisions are now resolved:
 - the website supports the latest two versions of major browsers; native apps target current and previous major OS versions;
 - native distribution starts with personal developer accounts and later migrates to organization accounts;
 - users can delete accounts, with contributed content anonymized or retained as community content where appropriate;
-- local, staging, and production environments are separate, with staging at `staging.noobeehood.com` and `api-staging.noobeehood.com`.
+- local, staging, and production environments are separate, with staging at `staging.noobeehood.com` and `api-staging.noobeehood.com`; both staging DNS A records point to the shared VPS and are Cloudflare-proxied.
 
-Operational details still to define during implementation include backup encryption and recovery testing, exact OAuth credentials, DNS records for staging, and the native release-account migration.
+Operational details still to define during implementation include backup encryption and recovery testing, exact OAuth credentials, and the native release-account migration.
