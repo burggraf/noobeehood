@@ -50,6 +50,7 @@ Follow [Local PocketBase](pocketbase/README.md), the canonical setup and verific
 - [Initial data model and authorization rules](docs/data-model.md)
 - [Website foundation implementation plan](docs/plans/2026-08-18-website-foundation-implementation.md)
 - [Public directory and search design](docs/plans/2026-08-18-public-directory-design.md)
+- [Public directory and search implementation plan](docs/plans/2026-08-18-public-directory-implementation.md)
 - [Manta + Manabí seed listing candidates](docs/research/manta-manabi-seed-listing-candidates.md)
 
 ## Status
