@@ -37,9 +37,9 @@ Future places become additional hives only after the first hive is genuinely use
 
 ## Local development
 
-The implemented local foundation requires Node.js **20.19.0 or newer** and PocketBase **v0.39.11**. Migrations are committed; local data and web environment configuration are ignored, and local credentials must not be committed.
+The implemented local foundation requires Node.js **20.19.0 or newer**, pnpm **10.34.5**, and PocketBase **v0.39.11**. Migrations are committed; local data and web environment configuration are ignored, and local credentials must not be committed.
 
-Follow [Local PocketBase](pocketbase/README.md), the canonical setup and verification guide. It covers the locked web install, pinned PocketBase install, isolated service, first local dashboard superuser, ignored `web/.env`, web startup, static checks, and safely prompted authorization security check. The documented installer and shell workflow support macOS and Linux only; Windows developers should follow that guide's WSL or manual pinned-binary instructions.
+Follow [Local PocketBase](pocketbase/README.md), the canonical setup and verification guide. It covers the pnpm-locked web install, pinned PocketBase install, isolated service, first local dashboard superuser, ignored `web/.env`, web startup, static checks, and safely prompted authorization security check. The documented installer and shell workflow support macOS and Linux only; Windows developers should follow that guide's WSL or manual pinned-binary instructions.
 
 ## Documentation
 

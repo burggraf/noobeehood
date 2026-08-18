@@ -6,7 +6,7 @@
 
 **Architecture:** Keep the web application in `web/` and the standalone PocketBase runtime in `pocketbase/`. SvelteKit builds a static SPA and talks directly to PocketBase through its browser SDK; PocketBase collection rules are the security boundary. Commit PocketBase migrations but never the binary, credentials, or `pb_data`.
 
-**Tech Stack:** Svelte 5.56.9, SvelteKit 2.70.2, adapter-static, TypeScript, PocketBase v0.39.11, PocketBase JavaScript SDK 0.27.3, npm.
+**Tech Stack:** Svelte 5.56.9, SvelteKit 2.70.2, adapter-static, TypeScript, PocketBase v0.39.11, PocketBase JavaScript SDK 0.27.3, pnpm 10.34.5.
 
 ---
 
@@ -46,7 +46,7 @@ The schema records Queen and Worker roles now, but the first migration allows on
 Run:
 
 ```bash
-npx sv create web --template minimal --types ts --no-add-ons --install npm
+pnpm dlx sv create web --template minimal --types ts --no-add-ons --install pnpm
 ```
 
 Expected: a runnable SvelteKit project under `web/`.
@@ -59,14 +59,14 @@ Create `web/.npmrc`:
 save-exact=true
 ```
 
-Run from `web/`:
+Run from the repository root:
 
 ```bash
-npm install --save-exact pocketbase@0.27.3
-npm install --save-dev --save-exact svelte@5.56.9 @sveltejs/kit@2.70.2 @sveltejs/adapter-static@3.0.10
+pnpm --dir web add --save-exact pocketbase@0.27.3
+pnpm --dir web add --save-dev --save-exact svelte@5.56.9 @sveltejs/kit@2.70.2 @sveltejs/adapter-static@3.0.10
 ```
 
-Keep the Svelte CLI's generated TypeScript, Vite, Svelte plugin, and `svelte-check` versions, but remove `^` or `~` from every direct dependency in `package.json`. Commit `package-lock.json`.
+Keep the Svelte CLI's generated TypeScript, Vite, Svelte plugin, and `svelte-check` versions, but remove `^` or `~` from every direct dependency in `package.json`. Commit `web/pnpm-lock.yaml`.
 
 **Step 3: Configure the static SPA**
 
@@ -116,8 +116,8 @@ pocketbase/pb_data/
 Run:
 
 ```bash
-npm --prefix web run check
-npm --prefix web run build
+pnpm --dir web run check
+pnpm --dir web run build
 find web/build -name 200.html
 ```
 
@@ -353,7 +353,7 @@ Expected final line:
 PocketBase security checks passed
 ```
 
-**Step 4: Add a convenience npm script**
+**Step 4: Add a convenience pnpm script**
 
 Add to `web/package.json`:
 
@@ -364,7 +364,7 @@ Add to `web/package.json`:
 **Step 5: Commit**
 
 ```bash
-git add scripts/check-pocketbase.mjs pocketbase/README.md web/package.json web/package-lock.json
+git add scripts/check-pocketbase.mjs pocketbase/README.md web/package.json web/pnpm-lock.yaml
 git commit -m "test: verify PocketBase auth rules"
 ```
 
@@ -408,8 +408,8 @@ export const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
 **Step 5: Verify**
 
 ```bash
-npm --prefix web run check
-npm --prefix web run build
+pnpm --dir web run check
+pnpm --dir web run build
 ```
 
 Expected: both pass.
@@ -417,7 +417,7 @@ Expected: both pass.
 **Step 6: Commit**
 
 ```bash
-git add web/.env.example web/src/lib web/package.json web/package-lock.json
+git add web/.env.example web/src/lib web/package.json web/pnpm-lock.yaml
 git commit -m "feat: connect web client to PocketBase"
 ```
 
@@ -474,7 +474,7 @@ Provide clear links to create an account and log in.
 Run:
 
 ```bash
-npm --prefix web run dev -- --host 127.0.0.1
+pnpm --dir web run dev -- --host 127.0.0.1
 ```
 
 Check at 375px, 768px, and 1280px widths:
@@ -489,8 +489,8 @@ Check at 375px, 768px, and 1280px widths:
 **Step 6: Verify build and commit**
 
 ```bash
-npm --prefix web run check
-npm --prefix web run build
+pnpm --dir web run check
+pnpm --dir web run build
 git add web
 git commit -m "feat: add responsive public website shell"
 ```
@@ -561,8 +561,8 @@ Until Resend is configured, retrieve verification/reset links from PocketBase's 
 **Step 7: Verify and commit**
 
 ```bash
-npm --prefix web run check
-npm --prefix web run build
+pnpm --dir web run check
+pnpm --dir web run build
 git add web
 git commit -m "feat: add verified email authentication"
 ```
@@ -600,9 +600,9 @@ Expected: no output.
 **Step 3: Run all automated checks fresh**
 
 ```bash
-npm --prefix web ci
-npm --prefix web run check
-npm --prefix web run build
+pnpm --dir web install --frozen-lockfile
+pnpm --dir web run check
+pnpm --dir web run build
 git diff --check
 ```
 
@@ -612,7 +612,7 @@ With local PocketBase running, also run:
 PUBLIC_POCKETBASE_URL=http://127.0.0.1:8090 \
 PB_SUPERUSER_EMAIL='local value' \
 PB_SUPERUSER_PASSWORD='local value' \
-npm --prefix web run test:pocketbase
+pnpm --dir web run test:pocketbase
 ```
 
 Expected: all commands exit zero and the security script prints `PocketBase security checks passed`.
@@ -639,7 +639,7 @@ This foundation is complete only when:
 - clients cannot grant themselves Beekeeper access;
 - the homepage loads the active hive from PocketBase;
 - authentication and account deletion work from the responsive site;
-- `npm run check`, `npm run build`, and the PocketBase security check pass;
+- `pnpm --dir web run check`, `pnpm --dir web run build`, and the PocketBase security check pass;
 - no SvelteKit server-side application files exist.
 
 After this plan, the next plan should add Google/Apple OAuth and fully tested Queen/Worker hive-management rules before any content moderation UI.

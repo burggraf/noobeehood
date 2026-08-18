@@ -8,10 +8,12 @@ The installer and local shell workflow documented here support **macOS and Linux
 
 ## Complete local workflow
 
-Node.js **20.19.0 or newer** is required for the web client. From the repository root on macOS, Linux, or WSL, install its exact locked dependencies and the pinned PocketBase binary:
+Node.js **20.19.0 or newer** and pnpm **10.34.5** are required for the web client. The version is pinned in `web/package.json`; Corepack-compatible pnpm installations select it automatically. From the repository root on macOS, Linux, or WSL, install the exact locked dependencies and pinned PocketBase binary:
 
 ```sh
-npm --prefix web ci
+corepack enable
+pnpm --dir web --version # 10.34.5
+pnpm --dir web install --frozen-lockfile
 ./scripts/install-pocketbase.sh
 ./pocketbase/pocketbase --version
 ```
@@ -33,14 +35,16 @@ In a second terminal, create the web environment file and start Vite:
 
 ```sh
 cp web/.env.example web/.env
-npm --prefix web run dev
+pnpm --dir web run dev
 ```
 
-`web/.env` is ignored by Git and points the browser client to this isolated local PocketBase service. Run the type/static check and production build from the repository root:
+`web/.env` is ignored by Git and points the browser client to this isolated local PocketBase service. After this initial setup, `./dev.sh` starts both services and stops those it started when you press Ctrl+C.
+
+Run the type/static check and production build from the repository root:
 
 ```sh
-npm --prefix web run check
-npm --prefix web run build
+pnpm --dir web run check
+pnpm --dir web run build
 test -f web/build/200.html
 ```
 
@@ -55,7 +59,7 @@ printf '\n'
 PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \
   PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" \
   PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" \
-  npm --prefix web run test:pocketbase
+  pnpm --dir web run test:pocketbase
 unset PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
 ```
 

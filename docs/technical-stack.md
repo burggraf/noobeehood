@@ -9,6 +9,7 @@
 | Area | Decision | Version / policy |
 |---|---|---|
 | Developer runtime | Node.js | **20.19.0 or newer** |
+| Package manager | pnpm | **10.34.5**, pinned in `web/package.json` |
 | Web UI | Svelte | **5.56.9** |
 | Web framework | SvelteKit | **2.70.2**, latest stable release selected; do not use SvelteKit 3 prereleases |
 | Backend | PocketBase | **v0.39.11**, latest stable release selected |
@@ -70,7 +71,7 @@ Production deployment will use a separate PocketBase process/service, database d
 
 ## Local developer workflow
 
-Node.js **20.19.0 or newer** and PocketBase **v0.39.11** are the pinned local baseline. The [canonical Local PocketBase guide](../pocketbase/README.md) contains the exact install, isolated serve, dashboard superuser, ignored environment, web startup, validation, safe credential prompt, and security-check commands, plus cleanup guidance.
+Node.js **20.19.0 or newer**, pnpm **10.34.5**, and PocketBase **v0.39.11** are the pinned local baseline. The [canonical Local PocketBase guide](../pocketbase/README.md) contains the exact install, isolated serve, dashboard superuser, ignored environment, web startup, validation, safe credential prompt, and security-check commands, plus cleanup guidance.
 
 That documented installer and local shell workflow support macOS and Linux only. Windows developers should use WSL for the documented workflow or manually install the matching pinned PocketBase binary as described in the canonical guide; this repository does not claim a tested native Windows installer script.
 
