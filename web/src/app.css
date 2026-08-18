@@ -53,3 +53,28 @@ form .button { margin-top: .8rem; width: fit-content; }
 .form-page dd { margin: 0; overflow-wrap: anywhere; }
 .form-page hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--color-border); }
 .state { margin-block: 1rem; }
+.discover-page { padding-block: clamp(2.5rem, 7vw, 5rem); }
+.discover-header { max-width: 48rem; margin-bottom: 2rem; }
+.discover-header h1 { max-width: 18ch; font-size: clamp(2.4rem, 7vw, 4.5rem); }
+.discover-search { display: grid; grid-template-columns: 1fr; gap: .8rem; max-width: none; padding: 1rem; border: 1px solid var(--color-border); border-radius: 1rem; background: var(--color-surface-raised); }
+.discover-search label { display: block; margin: 0 0 .35rem; }
+.discover-search select { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 2px solid var(--color-border); border-radius: .4rem; background: var(--color-surface-raised); color: inherit; font: inherit; }
+.discover-search .button { align-self: end; width: 100%; }
+.results-summary { margin-block: 1.5rem .75rem; font-weight: 700; }
+.listing-grid { display: grid; gap: 1rem; }
+.listing-card { display: flex; flex-direction: column; padding: 1.25rem; border: 1px solid var(--color-border); border-radius: 1rem; background: var(--color-surface-raised); }
+.listing-card h2 { margin: 0; font-size: 1.35rem; }
+.listing-card-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1rem; }
+.listing-type { color: var(--color-text-secondary, var(--color-text-primary)); font-size: .9rem; font-weight: 700; }
+.listing-card dl { display: grid; gap: .6rem; margin: .5rem 0 1.25rem; }
+.listing-card dl div { display: grid; grid-template-columns: 5.5rem 1fr; gap: .5rem; }
+.listing-card dt { font-weight: 700; }
+.listing-card dd { margin: 0; overflow-wrap: anywhere; }
+.detail-link { margin-top: auto; font-weight: 700; }
+.pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: center; margin-top: 2rem; }
+@media (min-width: 48rem) {
+	.discover-search { grid-template-columns: minmax(12rem, 1fr) minmax(12rem, 1fr) auto; align-items: end; padding: 1.25rem; }
+	.discover-search .button { width: auto; }
+	.listing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 80rem) { .listing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
