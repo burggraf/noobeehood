@@ -53,7 +53,7 @@
 					<article class="hive-card">
 						<h3>{hive.name}</h3>
 						<p>A place to find local answers, useful guides, and community life.</p>
-						<a class="detail-link" href={`/hives/${encodeURIComponent(hive.slug)}/discover`}>Explore this hive<span aria-hidden="true"> →</span></a>
+						<a class="button primary" href={`/hives/${encodeURIComponent(hive.slug)}/discover`}>Explore this hive<span aria-hidden="true"> →</span></a>
 					</article>
 				{/each}
 			</div>
