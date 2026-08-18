@@ -10,7 +10,7 @@
     <path d="M178 105C173 76 160 61 139 55M222 105C227 76 240 61 261 55" fill="none" stroke="#241F17" stroke-width="9" stroke-linecap="round"/>
     <circle cx="137" cy="54" r="7" fill="#D97706"/>
     <circle cx="263" cy="54" r="7" fill="#D97706"/>
-    <path d="M179 129L193 149L208 129L222 149" fill="none" stroke="#FFFEF8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M176 151V127L224 151V127" fill="none" stroke="#FFFEF8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M200 244L219 266L190 257Z" fill="#241F17" stroke="#241F17" stroke-width="4" stroke-linejoin="round"/>
   </g>
   <g aria-label="NooBeehood">

@@ -9,7 +9,7 @@
     <path d="M171 105C163 78 148 65 128 61M209 105C217 78 232 65 252 61" fill="none" stroke="#241F17" stroke-width="10" stroke-linecap="round"/>
     <circle cx="126" cy="60" r="7" fill="#D97706"/>
     <circle cx="254" cy="60" r="7" fill="#D97706"/>
-    <path d="M165 130L184 157L205 130L224 157" fill="none" stroke="#FFFEF8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M166 158V130L214 158V130" fill="none" stroke="#FFFEF8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g aria-label="NooBeehood">
     <text x="370" y="211" fill="#241F17" font-family="Nunito Sans, Avenir Next, Arial, sans-serif" font-size="104" font-weight="800" letter-spacing="-4">NooBee</text>
