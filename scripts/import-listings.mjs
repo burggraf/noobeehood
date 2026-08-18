@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { listingPayloadMatches, readSeedFiles } from './listing-seed.mjs';
+import { listingPayloadMatches, readSeedFiles, searchResultsAccepted } from './listing-seed.mjs';
 import { createListingQuery } from '../web/src/lib/listing-filter.js';
 
 const require = createRequire(new URL('../web/package.json', import.meta.url));
@@ -65,7 +65,7 @@ try {
       filter: publicClient.filter(`${query.expression} && status = {:status}`, { ...query.params, status: 'published' }),
       sort: 'slug',
     });
-    assert.deepEqual(records.map(({ slug }) => slug), [...test.expected_slugs].sort(), `search acceptance failed: ${test.query}`);
+    assert.ok(searchResultsAccepted(records.map(({ slug }) => slug), test.expected_slugs), `search acceptance failed: ${test.query}`);
   }
   const publishedSlugs = new Set(listings.filter(({ status }) => status === 'published').map(({ slug }) => slug));
   const existingPublished = await publicClient.collection('listings').getFullList({

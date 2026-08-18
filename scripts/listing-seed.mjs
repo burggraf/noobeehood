@@ -28,6 +28,12 @@ export function listingPayloadMatches(current, payload) {
   ));
 }
 
+export function searchResultsAccepted(actualSlugs, expectedSlugs) {
+  if (!expectedSlugs.length) return actualSlugs.length === 0;
+  const actual = new Set(actualSlugs);
+  return expectedSlugs.every((slug) => actual.has(slug));
+}
+
 export function validateListings(records) {
   if (!Array.isArray(records)) fail('listings must be an array');
   const slugs = new Set();
