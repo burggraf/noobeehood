@@ -62,6 +62,37 @@ create/update/delete: @request.auth.is_beekeeper = true
 
 The first slice stores Queen and Worker roles but does not yet authorize Queen/Worker management. Only Beekeepers can mutate hives and memberships; hive-scoped role management should be added with dedicated authorization tests.
 
+## `listings` (base)
+
+| Field | Definition |
+| --- | --- |
+| `hive` | required single relation to `hives` |
+| `name` | required text, maximum 160 characters |
+| `slug` | required text, maximum 160 characters |
+| `category` | required single select: `food-shopping-dining`, `healthcare-insurance`, `housing-household-services`, `transport-travel-experiences` |
+| `listing_type` | required text, maximum 120 characters |
+| `summary` | required text, maximum 500 characters |
+| `location` | optional text, maximum 240 characters |
+| `search_terms` | optional text, maximum 1,000 characters |
+| `website` | optional URL |
+| `phone` | optional text, maximum 80 characters |
+| `source_url` | required URL |
+| `verification_method` | required single select: `source_checked`, `provider_confirmed`, `editor_checked` |
+| `last_verified_at` | required date |
+| `next_review_at` | optional date |
+| `status` | required single select: `draft`, `published`, `archived` |
+
+A unique composite index on `(hive, slug)` prevents duplicate listings within a hive. Business/provider content is not seeded by the schema migration; changing content belongs in a separate validated seed/import workflow.
+
+Rules:
+
+```text
+list/view: status = 'published' && hive.status = 'active'
+create/update/delete: @request.auth.is_beekeeper = true
+```
+
+Public list and view access is limited to published listings in active hives. Only Beekeepers can create, update, or delete listings; Queen and Worker mutation permissions remain deferred until dedicated tenant-boundary tests exist.
+
 ## Tenant-scope invariant
 
 Every future tenant-scoped record **must** have a required single `hive` relation to `hives`. Its list, view, and mutation rules must enforce that relation (or an explicitly reviewed beekeeper/operator exception); never infer tenant scope from a user-owned relation alone.

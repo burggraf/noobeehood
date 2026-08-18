@@ -31,11 +31,16 @@ async function run() {
   const password = `PB-check-${randomUUID()}-Aa1!`;
   const email = `pb-check-${randomUUID()}@example.invalid`;
   const beekeeperEmail = `pb-check-${randomUUID()}@example.invalid`;
+  const listingSlugPrefix = `pb-check-${randomUUID()}`;
+  const inactiveHiveSlug = `${listingSlugPrefix}-inactive-hive`;
 
   const publicClient = new PocketBase(baseUrl);
   const adminClient = new PocketBase(baseUrl);
   const userClient = new PocketBase(baseUrl);
+  const beekeeperClient = new PocketBase(baseUrl);
+  const listingIds = new Set();
   let userId;
+  let inactiveHiveId;
 
   try {
     const hive = await publicClient.collection("hives").getFirstListItem(
@@ -90,6 +95,95 @@ async function run() {
       },
     );
 
+    const beekeeperUser = await adminClient.collection("users").create({
+      email: beekeeperEmail,
+      password,
+      passwordConfirm: password,
+      name: "PocketBase beekeeper security check",
+      verified: true,
+      is_beekeeper: true,
+    });
+    assert.equal(beekeeperUser.verified, true);
+    assert.equal(beekeeperUser.is_beekeeper, true);
+    await beekeeperClient.collection("users").authWithPassword(beekeeperEmail, password);
+
+    const inactiveHive = await adminClient.collection("hives").create({
+      name: "PocketBase security check inactive hive",
+      slug: inactiveHiveSlug,
+      status: "inactive",
+    });
+    inactiveHiveId = inactiveHive.id;
+
+    const validListing = (hive, slug, status = "published") => ({
+      hive,
+      name: `PocketBase security check ${slug}`,
+      slug,
+      category: "food-shopping-dining",
+      listing_type: "security fixture",
+      summary: "Synthetic listing used only by the PocketBase security check.",
+      location: "Manta",
+      search_terms: "synthetic fixture",
+      website: "https://example.invalid/listing",
+      phone: "+593 000 000 000",
+      source_url: "https://example.invalid/source",
+      verification_method: "editor_checked",
+      last_verified_at: "2026-08-18 00:00:00.000Z",
+      status,
+    });
+
+    const publishedListing = await adminClient.collection("listings").create(
+      validListing(hive.id, `${listingSlugPrefix}-published`),
+    );
+    listingIds.add(publishedListing.id);
+    const draftListing = await adminClient.collection("listings").create(
+      validListing(hive.id, `${listingSlugPrefix}-draft`, "draft"),
+    );
+    listingIds.add(draftListing.id);
+    const archivedListing = await adminClient.collection("listings").create(
+      validListing(hive.id, `${listingSlugPrefix}-archived`, "archived"),
+    );
+    listingIds.add(archivedListing.id);
+    const inactiveListing = await adminClient.collection("listings").create(
+      validListing(inactiveHive.id, `${listingSlugPrefix}-inactive`, "published"),
+    );
+    listingIds.add(inactiveListing.id);
+
+    const publicListings = await publicClient.collection("listings").getList(1, 50);
+    assert.deepEqual(publicListings.items.map((record) => record.id), [publishedListing.id]);
+    assert.equal((await publicClient.collection("listings").getOne(publishedListing.id)).id, publishedListing.id);
+    for (const hiddenListing of [draftListing, archivedListing, inactiveListing]) {
+      await assert.rejects(
+        publicClient.collection("listings").getOne(hiddenListing.id),
+        (error) => error?.status === 404,
+      );
+    }
+
+    await assert.rejects(
+      userClient.collection("listings").create(validListing(hive.id, `${listingSlugPrefix}-regular-user`)),
+    );
+    await assert.rejects(
+      userClient.collection("listings").update(publishedListing.id, { name: "Changed" }),
+    );
+    await assert.rejects(userClient.collection("listings").delete(publishedListing.id));
+
+    await assert.rejects(
+      adminClient.collection("listings").create(
+        validListing(hive.id, publishedListing.slug),
+      ),
+      (error) => error?.status === 400,
+    );
+
+    const beekeeperListing = await beekeeperClient.collection("listings").create(
+      validListing(hive.id, `${listingSlugPrefix}-beekeeper`, "draft"),
+    );
+    listingIds.add(beekeeperListing.id);
+    const updatedBeekeeperListing = await beekeeperClient.collection("listings").update(
+      beekeeperListing.id,
+      { name: "Updated by verified beekeeper" },
+    );
+    assert.equal(updatedBeekeeperListing.name, "Updated by verified beekeeper");
+    await beekeeperClient.collection("listings").delete(beekeeperListing.id);
+
     await userClient.collection("users").delete(userId);
     await assert.rejects(
       adminClient.collection("users").getOne(userId),
@@ -102,11 +196,25 @@ async function run() {
   } finally {
     if (adminClient.authStore.isValid) {
       let cleanupFailed = false;
+      for (const listingId of listingIds) {
+        try {
+          await adminClient.collection("listings").delete(listingId);
+        } catch (error) {
+          if (error?.status !== 404) cleanupFailed = true;
+        }
+      }
+      if (inactiveHiveId) {
+        try {
+          await adminClient.collection("hives").delete(inactiveHiveId);
+        } catch (error) {
+          if (error?.status !== 404) cleanupFailed = true;
+        }
+      }
       for (const testEmail of [email, beekeeperEmail]) {
         let records;
         try {
           records = await adminClient.collection("users").getList(1, 50, {
-            filter: `email = "${testEmail}"`,
+            filter: adminClient.filter("email = {:email}", { email: testEmail }),
           });
         } catch {
           cleanupFailed = true;
@@ -115,8 +223,8 @@ async function run() {
         for (const record of records.items) {
           try {
             await adminClient.collection("users").delete(record.id);
-          } catch {
-            cleanupFailed = true;
+          } catch (error) {
+            if (error?.status !== 404) cleanupFailed = true;
           }
         }
       }
