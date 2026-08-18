@@ -5,10 +5,11 @@ import { randomUUID } from "node:crypto";
 const require = createRequire(new URL("../web/package.json", import.meta.url));
 const { default: PocketBase } = require("pocketbase");
 
-function requiredEnv(name) {
-  const value = process.env[name]?.trim();
-  assert.ok(value, `${name} is required`);
-  return value;
+function requiredEnv(name, { trim = true } = {}) {
+  const value = process.env[name];
+  const normalized = trim ? value?.trim() : value;
+  assert.ok(normalized, `${name} is required`);
+  return normalized;
 }
 
 function pocketBaseUrl() {
@@ -26,7 +27,7 @@ function pocketBaseUrl() {
 async function run() {
   const baseUrl = pocketBaseUrl();
   const superuserEmail = requiredEnv("PB_SUPERUSER_EMAIL");
-  const superuserPassword = requiredEnv("PB_SUPERUSER_PASSWORD");
+  const superuserPassword = requiredEnv("PB_SUPERUSER_PASSWORD", { trim: false });
   const password = `PB-check-${randomUUID()}-Aa1!`;
   const email = `pb-check-${randomUUID()}@example.invalid`;
   const beekeeperEmail = `pb-check-${randomUUID()}@example.invalid`;
@@ -99,12 +100,27 @@ async function run() {
     );
     userId = undefined;
   } finally {
-    if (userId && adminClient.authStore.isValid) {
-      try {
-        await adminClient.collection("users").delete(userId);
-      } catch {
-        console.warn("PocketBase security check cleanup failed");
+    if (adminClient.authStore.isValid) {
+      let cleanupFailed = false;
+      for (const testEmail of [email, beekeeperEmail]) {
+        let records;
+        try {
+          records = await adminClient.collection("users").getList(1, 50, {
+            filter: `email = "${testEmail}"`,
+          });
+        } catch {
+          cleanupFailed = true;
+          continue;
+        }
+        for (const record of records.items) {
+          try {
+            await adminClient.collection("users").delete(record.id);
+          } catch {
+            cleanupFailed = true;
+          }
+        }
       }
+      if (cleanupFailed) console.warn("PocketBase security check cleanup failed");
     }
   }
 }
