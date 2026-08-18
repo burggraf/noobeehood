@@ -1,6 +1,6 @@
 # Initial data model
 
-PocketBase v0.39.11 stores the first website slice in three collections. Rules below are the exact collection rules in the migration; an empty rule is not used to make a collection public accidentally.
+PocketBase v0.39.11 stores the first website slice in four collections. Rules below are the exact collection rules in the migration; an empty rule is not used to make a collection public accidentally.
 
 ## `users` (auth)
 
