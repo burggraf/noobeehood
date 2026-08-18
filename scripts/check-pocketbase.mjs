@@ -23,15 +23,6 @@ function pocketBaseUrl() {
   return url.toString().replace(/\/$/, "");
 }
 
-function expectedRequestFailure(label) {
-  return (error) => {
-    assert.ok(error && typeof error === "object", `${label} returned an unexpected error`);
-    assert.ok(Number.isInteger(error.status), `${label} did not return an HTTP error`);
-    assert.ok(error.status >= 400 && error.status < 500, `${label} returned an unexpected HTTP status`);
-    return true;
-  };
-}
-
 async function run() {
   const baseUrl = pocketBaseUrl();
   const superuserEmail = requiredEnv("PB_SUPERUSER_EMAIL");
@@ -71,30 +62,48 @@ async function run() {
         name: "PocketBase security check",
         is_beekeeper: true,
       }),
-      expectedRequestFailure("beekeeper registration"),
+      (error) => {
+        assert.equal(error?.status, 400, "beekeeper registration should return HTTP 400");
+        return true;
+      },
     );
 
     await assert.rejects(
       publicClient.collection("users").authWithPassword(email, password),
-      expectedRequestFailure("unverified password login"),
+      (error) => {
+        assert.equal(error?.status, 403, "unverified password login should return HTTP 403");
+        return true;
+      },
     );
 
-    await adminClient.collection("users").update(userId, { verified: true });
+    const verifiedUser = await adminClient.collection("users").update(userId, { verified: true });
+    assert.equal(verifiedUser.id, userId);
+    assert.equal(verifiedUser.verified, true);
 
     await userClient.collection("users").authWithPassword(email, password);
     await assert.rejects(
       userClient.collection("users").update(userId, { is_beekeeper: true }),
-      expectedRequestFailure("beekeeper privilege update"),
+      (error) => {
+        assert.equal(error?.status, 404, "beekeeper privilege update should return HTTP 404");
+        return true;
+      },
     );
 
     await userClient.collection("users").delete(userId);
+    await assert.rejects(
+      adminClient.collection("users").getOne(userId),
+      (error) => {
+        assert.equal(error?.status, 404, "deleted user lookup should return HTTP 404");
+        return true;
+      },
+    );
     userId = undefined;
   } finally {
     if (userId && adminClient.authStore.isValid) {
       try {
         await adminClient.collection("users").delete(userId);
       } catch {
-        // Cleanup is best effort; assertions above remain authoritative.
+        console.warn("PocketBase security check cleanup failed");
       }
     }
   }

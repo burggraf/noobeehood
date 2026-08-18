@@ -34,13 +34,17 @@ interactively. Do not commit the credentials.
 
 ## Run the security check
 
-With PocketBase running locally and a temporary local superuser available, run
-from `web/` with the values supplied only in your shell environment:
+With PocketBase running locally and a temporary local superuser available,
+run from `web/`. Enter credentials at prompts so the password is not saved in
+shell history:
 
-```sh
-PUBLIC_POCKETBASE_URL=http://127.0.0.1:8090 \
-PB_SUPERUSER_EMAIL='local-superuser@example.test' \
-PB_SUPERUSER_PASSWORD='use-your-local-password' \
+```bash
+read -r -p 'PocketBase superuser email: ' PB_SUPERUSER_EMAIL
+printf '\n'
+read -r -s -p 'PocketBase superuser password: ' PB_SUPERUSER_PASSWORD
+printf '\n'
+export PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090'
+export PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
 npm run test:pocketbase
 ```
 
