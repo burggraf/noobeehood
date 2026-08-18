@@ -2,7 +2,7 @@
 	import { signup } from '$lib/auth';
 	let name = $state(''), email = $state(''), password = $state(''), passwordConfirm = $state('');
 	let pending = $state(false), error = $state(''), success = $state('');
-	async function submit() { pending = true; error = ''; success = ''; try { await signup(name, email, password, passwordConfirm); success = 'Account created. Check your email to verify it before logging in.'; } catch (e) { error = e instanceof Error ? e.message : 'We could not create your account. Please try again.'; } finally { pending = false; } }
+	async function submit() { if (pending) return; pending = true; error = ''; success = ''; try { await signup(name, email, password, passwordConfirm); success = 'Account created. Check your email to verify it before logging in.'; } catch (e) { error = e instanceof Error ? e.message : 'We could not create your account. Please try again.'; } finally { pending = false; } }
 </script>
 <svelte:head><title>Create account | NooBeehood</title></svelte:head>
 <section class="form-page wrapper"><h1>Create your account</h1><p>Join your neighborhood.</p>

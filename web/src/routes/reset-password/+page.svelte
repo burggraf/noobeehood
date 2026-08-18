@@ -1,8 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte'; import { confirmPasswordReset } from '$lib/auth';
 	let token = $state(''), password = $state(''), passwordConfirm = $state(''), pending = $state(false), error = $state(''), done = $state(false);
-	onMount(() => { token = new URLSearchParams(window.location.search).get('token') ?? ''; if (!token) error = 'This reset link is missing its token.'; });
+	onMount(() => {
+		const url = new URL(window.location.href);
+		token = url.searchParams.get('token') ?? '';
+		url.searchParams.delete('token');
+		history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+		if (!token) error = 'This reset link is missing its token.';
+	});
 	async function submit() {
+		if (pending) return;
 		error = '';
 		if (password !== passwordConfirm) { error = 'Passwords do not match.'; return; }
 		pending = true;

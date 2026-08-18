@@ -8,6 +8,11 @@ function loginMessage(error: unknown) {
 	return status === 400 || status === 401 || status === 403 ? invalidLoginError : safeError;
 }
 
+function isOperationalEmailFailure(error: unknown) {
+	const status = (error as { status?: unknown })?.status;
+	return typeof status !== 'number' || status === 0 || status === 429 || status >= 500;
+}
+
 export async function signup(name: string, email: string, password: string, passwordConfirm: string) {
 	try {
 		const user = await pb.collection('users').create({ name, email, password, passwordConfirm });
@@ -37,16 +42,16 @@ export async function login(email: string, password: string) {
 export async function resendVerification(email: string) {
 	try {
 		await pb.collection('users').requestVerification(email);
-	} catch {
-		// Keep the response deliberately indistinguishable for unknown accounts.
+	} catch (error) {
+		if (isOperationalEmailFailure(error)) throw new Error('We could not send a verification email right now. Please try again.');
 	}
 }
 
 export async function requestPasswordReset(email: string) {
 	try {
 		await pb.collection('users').requestPasswordReset(email);
-	} catch {
-		// Keep the response deliberately indistinguishable for unknown accounts.
+	} catch (error) {
+		if (isOperationalEmailFailure(error)) throw new Error('We could not send reset instructions right now. Please try again.');
 	}
 }
 
@@ -58,11 +63,18 @@ export async function confirmPasswordReset(token: string, password: string, pass
 	}
 }
 
-export async function deleteAccount() {
-	const id = pb.authStore.record?.id;
-	if (!id) throw new Error('You must be signed in to delete your account.');
+export async function deleteAccount(password: string) {
+	const user = pb.authStore.record;
+	if (!user?.id || !user.email) throw new Error('You must be signed in to delete your account.');
 	try {
-		await pb.collection('users').delete(id);
+		await pb.collection('users').authWithPassword(user.email, password);
+	} catch (error) {
+		const status = (error as { status?: number })?.status;
+		if (status === 400 || status === 401 || status === 403) throw new Error('Your password is incorrect. Your account was not deleted.');
+		throw new Error('We could not verify your password. Please try again.');
+	}
+	try {
+		await pb.collection('users').delete(user.id);
 		pb.authStore.clear();
 	} catch {
 		throw new Error('We could not delete your account. Please try again.');

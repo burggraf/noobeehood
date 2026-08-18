@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { login, resendVerification } from '$lib/auth';
 	let email = $state(''), password = $state(''), pending = $state(false), resendPending = $state(false), error = $state(''), status = $state('');
-	async function submit() { pending = true; error = ''; status = ''; try { await login(email, password); window.location.href = '/account'; } catch (e) { error = e instanceof Error ? e.message : 'Your email or password may be incorrect, or your email may not be verified.'; } finally { pending = false; } }
-	async function resend() { resendPending = true; await resendVerification(email); status = 'If an account uses that email, a verification message is on its way.'; resendPending = false; }
+	async function submit() { if (pending) return; pending = true; error = ''; status = ''; try { await login(email, password); window.location.href = '/account'; } catch (e) { error = e instanceof Error ? e.message : 'Your email or password may be incorrect, or your email may not be verified.'; } finally { pending = false; } }
+	async function resend() {
+		if (resendPending) return;
+		resendPending = true; error = ''; status = '';
+		try { await resendVerification(email); status = 'If an account uses that email, a verification message is on its way.'; } catch (e) { error = e instanceof Error ? e.message : 'We could not send a verification email right now. Please try again.'; } finally { resendPending = false; }
+	}
 </script>
 <svelte:head><title>Log in | NooBeehood</title></svelte:head>
 <section class="form-page wrapper"><h1>Log in</h1>
