@@ -14,11 +14,15 @@ assert.throws(() => validateListings([{ ...valid[0], category: 'bogus' }]), /cat
 assert.throws(() => validateListings([valid[0], { ...valid[0] }]), /duplicate slug/);
 assert.throws(() => validateListings([{ ...valid[0], source_url: '' }]), /source_url/);
 assert.throws(() => validateListings([{ ...valid[0], last_verified_at: 'not-a-date' }]), /last_verified_at/);
+assert.throws(() => validateListings([{ ...valid[0], location: 42 }]), /location/);
+assert.throws(() => validateListings([{ ...valid[0], next_review_at: '2026-11-18T00:00:00.000Z' }]), /next_review_at/);
+assert.throws(() => validateListings([{ ...valid[0], next_review_at: '2026-08-17' }]), /next_review_at/);
 
 const cases = [{ query: 'food', category: 'food-shopping-dining', expected_slugs: ['example'] }];
 assert.doesNotThrow(() => validateSearchCases(cases, valid));
 assert.throws(() => validateSearchCases([{ query: 'x', category: 'bogus', expected_slugs: [] }], valid), /category/);
 assert.throws(() => validateSearchCases([{ query: 'x', expected_slugs: ['example'] }], [{ ...valid[0], status: 'draft' }]), /published/);
 assert.throws(() => validateSearchCases([{ query: 'x', expected_slugs: ['missing'] }], valid), /expected slug/);
+assert.throws(() => validateSearchCases([{ query: 'x', expected_slugs: ['example', 'example'] }], valid), /duplicate expected slug/);
 assert.throws(() => validateSearchCases([{ query: 'x', expected_slugs: [] }, { query: ' x ', expected_slugs: [] }], valid), /query/);
 console.log('seed contract positive and negative cases passed');
