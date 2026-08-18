@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood Open Wings logo concept</title>
+  <desc id="desc">A warm geometric bee with rounded wings, a hexagonal gold body, and the NooBeehood wordmark.</desc>
+  <g transform="translate(22 10)">
+    <path d="M172 166C115 161 74 132 74 91C74 57 100 36 131 42C166 49 188 82 190 129L172 166Z" fill="#FFF1B8" stroke="#241F17" stroke-width="11" stroke-linejoin="round"/>
+    <path d="M208 194C265 199 306 228 306 269C306 303 280 324 249 318C214 311 192 278 190 231L208 194Z" fill="#FFF1B8" stroke="#241F17" stroke-width="11" stroke-linejoin="round"/>
+    <path d="M190 93L242 123V217L190 247L138 217V123L190 93Z" fill="#F6B800" stroke="#241F17" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M146 151H234M146 189H234" fill="none" stroke="#241F17" stroke-width="14"/>
+    <path d="M171 105C163 78 148 65 128 61M209 105C217 78 232 65 252 61" fill="none" stroke="#241F17" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="126" cy="60" r="7" fill="#D97706"/>
+    <circle cx="254" cy="60" r="7" fill="#D97706"/>
+    <path d="M165 130L184 157L205 130L224 157" fill="none" stroke="#FFFEF8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g aria-label="NooBeehood">
+    <text x="370" y="211" fill="#241F17" font-family="Nunito Sans, Avenir Next, Arial, sans-serif" font-size="104" font-weight="800" letter-spacing="-4">NooBee</text>
+    <text x="760" y="211" fill="#D97706" font-family="Nunito Sans, Avenir Next, Arial, sans-serif" font-size="88" font-weight="600" letter-spacing="-3">hood</text>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood Forward Path logo concept</title>
+  <desc id="desc">An upward-moving geometric bee with a restrained flight path beside the NooBeehood wordmark.</desc>
+  <path d="M42 257C66 283 104 287 126 263C143 244 134 219 108 222C87 225 83 249 104 260" fill="none" stroke="#D97706" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 19"/>
+  <g transform="rotate(-12 205 170)">
+    <path d="M177 158C126 158 91 133 91 98C91 67 115 49 143 56C173 64 192 92 193 131L177 158Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M222 176C273 176 308 151 308 116C308 85 284 67 256 74C226 82 207 110 206 149L222 176Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M200 96L248 124V216L200 244L152 216V124L200 96Z" fill="#F6B800" stroke="#241F17" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M158 151H242M158 188H242" fill="none" stroke="#241F17" stroke-width="14"/>
+    <path d="M178 105C173 76 160 61 139 55M222 105C227 76 240 61 261 55" fill="none" stroke="#241F17" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="137" cy="54" r="7" fill="#D97706"/>
+    <circle cx="263" cy="54" r="7" fill="#D97706"/>
+    <path d="M179 129L193 149L208 129L222 149" fill="none" stroke="#FFFEF8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M200 244L219 266L190 257Z" fill="#241F17" stroke="#241F17" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+  <g aria-label="NooBeehood">
+    <text x="370" y="211" fill="#241F17" font-family="Nunito Sans, Avenir Next, Arial, sans-serif" font-size="104" font-weight="800" letter-spacing="-4">NooBee</text>
+    <text x="760" y="211" fill="#D97706" font-family="Nunito Sans, Avenir Next, Arial, sans-serif" font-size="88" font-weight="600" letter-spacing="-3">hood</text>
+    <path d="M373 242H701" fill="none" stroke="#F6B800" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

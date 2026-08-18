@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood Linked Hive logo concept</title>
+  <desc id="desc">A geometric bee assembled from connected honeycomb cells beside the NooBeehood wordmark.</desc>
+  <g transform="translate(20 8)">
+    <path d="M121 62L169 90V146L121 174L73 146V90L121 62Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M259 62L307 90V146L259 174L211 146V90L259 62Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M121 186L169 214V270L121 298L73 270V214L121 186Z" fill="#FFF9E8" stroke="#D97706" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M259 186L307 214V270L259 298L211 270V214L259 186Z" fill="#FFF9E8" stroke="#D97706" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M190 75C224 75 242 102 242 136V214C242 248 224 275 190 275C156 275 138 248 138 214V136C138 102 156 75 190 75Z" fill="#F6B800" stroke="#241F17" stroke-width="12"/>
+    <path d="M141 145H239M141 190H239M141 235H239" fill="none" stroke="#241F17" stroke-width="15"/>
+    <path d="M166 80C158 52 143 40 122 38M214 80C222 52 237 40 258 38" fill="none" stroke="#241F17" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="120" cy="38" r="7" fill="#D97706"/>
+    <circle cx="260" cy="38" r="7" fill="#D97706"/>
+    <path d="M100 118L146 93L220 244L280 242" fill="none" stroke="#D97706" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="100" cy="118" r="8" fill="#D97706"/>
+    <circle cx="280" cy="242" r="8" fill="#D97706"/>
+  </g>
+  <g aria-label="NooBeehood">
+    <text x="370" y="211" fill="#241F17" font-family="Nunito Sans, Avenir Next, Arial, sans-serif" font-size="104" font-weight="800" letter-spacing="-4">NooBee</text>
+    <text x="760" y="211" fill="#D97706" font-family="Nunito Sans, Avenir Next, Arial, sans-serif" font-size="88" font-weight="600" letter-spacing="-3">hood</text>
+  </g>
+</svg>
