@@ -39,3 +39,17 @@ h1 { max-width: 12ch; margin-bottom: 1rem; font-size: clamp(2.75rem, 9vw, 5.5rem
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 .link-button { border: 0; padding: .5rem .25rem; background: transparent; color: inherit; cursor: pointer; font: inherit; font-weight: 700; }
 .link-button:hover { text-decoration: underline; }
+.form-page { max-width: 42rem; padding-block: clamp(2.5rem, 8vw, 5rem); }
+.form-page h1 { font-size: clamp(2.4rem, 8vw, 4rem); }
+form { display: grid; gap: .65rem; max-width: 30rem; }
+label { font-weight: 700; margin-top: .6rem; }
+input { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 2px solid var(--color-border); border-radius: .4rem; background: var(--color-surface-raised); color: inherit; font: inherit; }
+input:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+form .button { margin-top: .8rem; width: fit-content; }
+.error { color: var(--color-brand-secondary); }
+.danger { border-color: var(--color-brand-secondary); }
+.form-page dl { display: grid; grid-template-columns: minmax(5rem, 8rem) 1fr; gap: .5rem 1rem; max-width: 30rem; }
+.form-page dt { font-weight: 700; }
+.form-page dd { margin: 0; overflow-wrap: anywhere; }
+.form-page hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--color-border); }
+.state { margin-block: 1rem; }
