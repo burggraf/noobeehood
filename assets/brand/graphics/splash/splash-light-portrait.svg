@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1290 2796" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood light portrait splash graphic</title>
+  <desc id="desc">The Balanced Flight bee centered on cream with restrained honeycomb cells at opposite corners.</desc>
+  <rect width="1290" height="2796" fill="#FFF9E8"/>
+  <g fill="none" stroke="#FFF1B8" stroke-width="18" opacity="0.8">
+    <path d="M1110 -70L1250 10V172L1110 252L970 172V10L1110 -70Z"/>
+    <path d="M1250 172L1390 252V414L1250 494L1110 414V252L1250 172Z"/>
+    <path d="M40 2480L180 2560V2722L40 2802L-100 2722V2560L40 2480Z"/>
+    <path d="M180 2238L320 2318V2480L180 2560L40 2480V2318L180 2238Z"/>
+  </g>
+  <g transform="translate(325 1078) scale(2)">
+    <g transform="rotate(-8 160 180)">
+      <path d="M130 179C86 179 54 158 52 126C50 100 68 82 93 85C121 89 144 114 148 157L130 179Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M190 179C234 179 266 158 268 126C270 100 252 82 227 85C199 89 176 114 172 157L190 179Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M160 107L206 134V250L160 277L114 250V134L160 107Z" fill="#F6B800" stroke="#241F17" stroke-width="12" stroke-linejoin="round"/>
+      <path d="M116 176H204M116 218H204" fill="none" stroke="#241F17" stroke-width="14"/>
+    </g>
+  </g>
+</svg>

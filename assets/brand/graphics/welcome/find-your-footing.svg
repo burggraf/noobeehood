@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Find your footing welcome graphic</title>
+  <desc id="desc">A warm path enters a small connected hive, representing arrival and orientation.</desc>
+  <rect width="1200" height="800" rx="48" fill="#FFF9E8"/>
+  <path d="M70 650C220 700 300 586 390 604C482 623 483 520 570 515" fill="none" stroke="#D97706" stroke-width="14" stroke-linecap="round" stroke-dasharray="3 30"/>
+  <g stroke="#241F17" stroke-width="12" stroke-linejoin="round">
+    <path d="M680 170L790 233V360L680 423L570 360V233L680 170Z" fill="#FFF1B8"/>
+    <path d="M900 170L1010 233V360L900 423L790 360V233L900 170Z" fill="#FFFEF8"/>
+    <path d="M790 360L900 423V550L790 613L680 550V423L790 360Z" fill="#F6B800"/>
+    <path d="M1010 360L1120 423V550L1010 613L900 550V423L1010 360Z" fill="#FFF1B8"/>
+  </g>
+  <circle cx="568" cy="515" r="18" fill="#D97706"/>
+  <path d="M742 486H838" fill="none" stroke="#241F17" stroke-width="14" stroke-linecap="round"/>
+</svg>

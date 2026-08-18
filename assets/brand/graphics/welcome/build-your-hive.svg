@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Build your hive welcome graphic</title>
+  <desc id="desc">A golden cell moves into an open place in a connected hive, representing one useful contribution.</desc>
+  <rect width="1200" height="800" rx="48" fill="#FFF9E8"/>
+  <g stroke="#241F17" stroke-width="12" stroke-linejoin="round">
+    <path d="M660 90L770 153V280L660 343L550 280V153L660 90Z" fill="#FFF1B8"/>
+    <path d="M880 90L990 153V280L880 343L770 280V153L880 90Z" fill="#FFFEF8"/>
+    <path d="M550 280L660 343V470L550 533L440 470V343L550 280Z" fill="#FFFEF8"/>
+    <path d="M770 280L880 343V470L770 533L660 470V343L770 280Z" fill="#FFF1B8"/>
+    <path d="M990 280L1100 343V470L990 533L880 470V343L990 280Z" fill="#FFFEF8"/>
+    <path d="M660 470L770 533V660L660 723L550 660V533L660 470Z" fill="#FFF1B8"/>
+    <path d="M880 470L990 533V660L880 723L770 660V533L880 470Z" fill="#FFFEF8"/>
+    <path d="M275 280L385 343V470L275 533L165 470V343L275 280Z" fill="#F6B800"/>
+  </g>
+  <path d="M402 406H530" fill="none" stroke="#D97706" stroke-width="14" stroke-linecap="round" stroke-dasharray="3 28"/>
+  <circle cx="530" cy="406" r="14" fill="#D97706"/>
+</svg>

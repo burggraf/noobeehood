@@ -1,0 +1,24 @@
+:root {
+  /* Brand */
+  --color-brand-primary: #F6B800;
+  --color-brand-secondary: #D97706;
+  --color-brand-accent: #3F6B45;
+
+  /* Surfaces */
+  --color-surface-canvas: #FFF9E8;
+  --color-surface-raised: #FFFEF8;
+  --color-surface-selected: #FFF1B8;
+  --color-surface-inverse: #241F17;
+
+  /* Content */
+  --color-text-primary: #241F17;
+  --color-text-on-primary: #241F17;
+  --color-text-inverse: #FFFEF8;
+  --color-border: #D97706;
+
+  /* Semantic */
+  --color-action-primary: #F6B800;
+  --color-action-primary-hover: #D97706;
+  --color-success: #3F6B45;
+  --color-focus: #3F6B45;
+}

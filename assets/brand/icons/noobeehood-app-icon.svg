@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood app icon</title>
+  <desc id="desc">The gold Balanced Flight bee centered on a square charcoal field.</desc>
+  <rect width="1024" height="1024" fill="#241F17"/>
+  <g transform="scale(3.2)">
+    <g transform="rotate(-8 160 180)">
+      <path d="M130 179C86 179 54 158 52 126C50 100 68 82 93 85C121 89 144 114 148 157L130 179Z" fill="#FFF1B8" stroke="#FFF1B8" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M190 179C234 179 266 158 268 126C270 100 252 82 227 85C199 89 176 114 172 157L190 179Z" fill="#FFF1B8" stroke="#FFF1B8" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M160 107L206 134V250L160 277L114 250V134L160 107Z" fill="#F6B800" stroke="#FFF1B8" stroke-width="12" stroke-linejoin="round"/>
+      <path d="M116 176H204M116 218H204" fill="none" stroke="#241F17" stroke-width="14"/>
+    </g>
+  </g>
+</svg>

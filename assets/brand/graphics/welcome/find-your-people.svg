@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Find your people welcome graphic</title>
+  <desc id="desc">Connected honeycomb cells gather around a golden center, representing useful local relationships.</desc>
+  <rect width="1200" height="800" rx="48" fill="#FFF9E8"/>
+  <g stroke="#241F17" stroke-width="12" stroke-linejoin="round">
+    <path d="M600 250L730 325V475L600 550L470 475V325L600 250Z" fill="#F6B800"/>
+    <path d="M340 100L470 175V325L340 400L210 325V175L340 100Z" fill="#FFF1B8"/>
+    <path d="M860 100L990 175V325L860 400L730 325V175L860 100Z" fill="#FFF1B8"/>
+    <path d="M340 400L470 475V625L340 700L210 625V475L340 400Z" fill="#FFFEF8"/>
+    <path d="M860 400L990 475V625L860 700L730 625V475L860 400Z" fill="#FFFEF8"/>
+  </g>
+  <g fill="#241F17">
+    <circle cx="340" cy="236" r="32"/>
+    <circle cx="860" cy="236" r="32"/>
+    <circle cx="600" cy="386" r="38"/>
+  </g>
+  <g fill="none" stroke="#241F17" stroke-width="16" stroke-linecap="round">
+    <path d="M286 300C302 272 378 272 394 300"/>
+    <path d="M806 300C822 272 898 272 914 300"/>
+    <path d="M536 468C558 428 642 428 664 468"/>
+  </g>
+</svg>
