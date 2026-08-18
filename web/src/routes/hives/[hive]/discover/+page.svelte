@@ -5,6 +5,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pocketbase';
+	import { formatVerificationDate } from '$lib/date.js';
 
 	const categoryLabels: Record<string, string> = {
 		'food-shopping-dining': 'Food, shopping & dining',
@@ -72,10 +73,6 @@
 		return discoverUrl(`/hives/${encodeURIComponent(hiveSlug)}/discover`, { ...currentParams, page: targetPage });
 	}
 
-	function verifiedDate(value: string) {
-		const date = new Date(value);
-		return Number.isNaN(date.valueOf()) ? 'Date unavailable' : new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(date);
-	}
 </script>
 
 <svelte:head>
@@ -134,7 +131,7 @@
 						<p>{listing.summary}</p>
 						<dl>
 							{#if listing.location}<div><dt>Location</dt><dd>{listing.location}</dd></div>{/if}
-							<div><dt>Verified</dt><dd>{verifiedDate(listing.last_verified_at)}</dd></div>
+							<div><dt>Verified</dt><dd>{formatVerificationDate(listing.last_verified_at)}</dd></div>
 						</dl>
 						<a class="detail-link" href={`/hives/${encodeURIComponent(hiveSlug)}/discover/${encodeURIComponent(listing.slug)}`}>View service details<span aria-hidden="true"> →</span></a>
 					</article>
