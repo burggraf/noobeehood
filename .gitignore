@@ -1,1 +1,11 @@
 .DS_Store
+
+web/node_modules/
+web/.svelte-kit/
+web/build/
+web/.env
+web/.env.*
+!web/.env.example
+
+pocketbase/pb_data/
+pocketbase/pocketbase*
