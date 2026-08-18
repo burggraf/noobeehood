@@ -6,13 +6,15 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 
-CONCEPTS = [
-    "noobeehood-concept-1-open-wings.svg",
-    "noobeehood-concept-2-linked-hive.svg",
-    "noobeehood-concept-3-forward-path.svg",
+ASSETS = [
+    Path("assets/brand/logos/concepts/noobeehood-concept-1-open-wings.svg"),
+    Path("assets/brand/logos/concepts/noobeehood-concept-2-linked-hive.svg"),
+    Path("assets/brand/logos/concepts/noobeehood-concept-3-forward-path.svg"),
+    Path("assets/brand/logos/refinements/noobeehood-3a-balanced-flight.svg"),
+    Path("assets/brand/logos/refinements/noobeehood-3b-nested-n.svg"),
+    Path("assets/brand/logos/refinements/noobeehood-3c-open-cell.svg"),
 ]
 ROOT = Path(__file__).resolve().parents[1]
-CONCEPT_DIR = ROOT / "assets/brand/logos/concepts"
 APPROVED_COLORS = {
     "#F6B800",
     "#D97706",
@@ -67,13 +69,13 @@ def check_svg(path: Path) -> list[str]:
 
 
 def main() -> int:
-    errors = [error for name in CONCEPTS for error in check_svg(CONCEPT_DIR / name)]
+    errors = [error for path in ASSETS for error in check_svg(ROOT / path)]
     if errors:
         print("Brand asset check failed:")
         print("\n".join(f"- {error}" for error in errors))
         return 1
 
-    print(f"Brand asset check passed: {len(CONCEPTS)} SVG concepts")
+    print(f"Brand asset check passed: {len(ASSETS)} SVG logo assets")
     return 0
 
 
