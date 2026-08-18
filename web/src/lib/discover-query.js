@@ -5,6 +5,11 @@ export const DISCOVER_CATEGORIES = [
   'transport-travel-experiences',
 ];
 
+/** @param {number} requestedPage @param {number} totalPages */
+export function canonicalDiscoverPage(requestedPage, totalPages) {
+  return Math.min(requestedPage, Math.max(totalPages, 1));
+}
+
 /** @param {URL} url */
 export function readDiscoverParams(url) {
   const category = url.searchParams.get('category') || '';

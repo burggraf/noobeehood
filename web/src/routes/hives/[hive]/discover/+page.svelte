@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getActiveHive, listListings, DirectoryNotFoundError } from '$lib/listings';
-	import { discoverUrl, DISCOVER_CATEGORIES, readDiscoverParams } from '$lib/discover-query.js';
+	import { canonicalDiscoverPage, discoverUrl, DISCOVER_CATEGORIES, readDiscoverParams } from '$lib/discover-query.js';
 	import type { Hive, Listing } from '$lib/types';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
@@ -41,8 +41,9 @@
 				if (disposed || generation !== loadGeneration) return;
 				const result = await listListings({ hiveId: activeHive.id, ...params, requestKey: listingsRequestKey });
 				if (disposed || generation !== loadGeneration) return;
-				if (params.page > result.totalPages && result.totalPages > 0) {
-					await goto(discoverUrl(`/hives/${encodeURIComponent(slug)}/discover`, { ...params, page: result.totalPages }), {
+				const canonicalPage = canonicalDiscoverPage(params.page, result.totalPages);
+				if (params.page !== canonicalPage) {
+					await goto(discoverUrl(`/hives/${encodeURIComponent(slug)}/discover`, { ...params, page: canonicalPage }), {
 						replaceState: true,
 						keepFocus: true,
 						noScroll: true,
