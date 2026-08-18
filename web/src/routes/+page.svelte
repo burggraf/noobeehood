@@ -5,7 +5,6 @@
 
 	let hives = $state<Hive[]>([]);
 	let status = $state<'loading' | 'success' | 'empty' | 'error'>('loading');
-	let errorMessage = $state('');
 
 	onMount(() => {
 		let disposed = false;
@@ -15,10 +14,9 @@
 			if (disposed) return;
 			hives = records;
 			status = records.length ? 'success' : 'empty';
-		}).catch((error: unknown) => {
+		}).catch(() => {
 			if (disposed) return;
 			status = 'error';
-			errorMessage = error instanceof Error ? error.message : 'We could not load neighborhoods right now.';
 		});
 
 		return () => {
@@ -46,7 +44,7 @@
 		{#if status === 'loading'}
 			<p class="state" role="status">Loading neighborhoods…</p>
 		{:else if status === 'error'}
-			<p class="state error" role="alert">We could not load neighborhoods. {errorMessage}</p>
+			<p class="state error" role="alert">We couldn’t load neighborhoods right now. Please try again by reloading the page.</p>
 		{:else if status === 'empty'}
 			<p class="state">No active neighborhoods yet. Check back soon.</p>
 		{:else}
