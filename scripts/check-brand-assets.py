@@ -13,6 +13,9 @@ ASSETS = [
     Path("assets/brand/logos/refinements/noobeehood-3a-balanced-flight.svg"),
     Path("assets/brand/logos/refinements/noobeehood-3b-nested-n.svg"),
     Path("assets/brand/logos/refinements/noobeehood-3c-open-cell.svg"),
+    Path("assets/brand/logos/refinements/wordmark-treatments/noobeehood-3a-1-underline-noobee.svg"),
+    Path("assets/brand/logos/refinements/wordmark-treatments/noobeehood-3a-2-underline-hood.svg"),
+    Path("assets/brand/logos/refinements/wordmark-treatments/noobeehood-3a-3-underline-full.svg"),
 ]
 ROOT = Path(__file__).resolve().parents[1]
 APPROVED_COLORS = {
