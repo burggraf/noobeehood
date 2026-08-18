@@ -13,6 +13,12 @@ The identity centers on a compact geometric bee made from a hexagonal body and t
 
 The primary logo is a combination mark with the symbol on the left and `NooBeehood` on the right. `NooBee` receives greater typographic emphasis while `hood` remains readable as part of the uninterrupted brand name. The wordmark uses a rounded humanist style based on Nunito Sans and will be converted to vector outlines for final delivery.
 
+### Final selection
+
+The approved mark is **3A — Balanced Flight**: a recognizable bee reduced to a tilted hexagonal body, two rounded wings, and two charcoal bands. It has no face, antennae, stinger, or flight trail.
+
+The approved wordmark uses bold charcoal `NooBee`, medium Honey Amber `hood`, and a rounded Bee Gold underline beneath `NooBee`. Final logo SVGs use outlined, open-licensed Nunito Sans letterforms so they render consistently without installed fonts.
+
 ## Color system
 
 Retain and formalize the existing palette:
