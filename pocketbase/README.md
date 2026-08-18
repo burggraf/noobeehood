@@ -48,6 +48,22 @@ pnpm --dir web run build
 test -f web/build/200.html
 ```
 
+## Validate and import verified listings
+
+Run the stdlib-only prevalidation before importing. It checks the allowlist, required fields, lengths, URLs, ISO dates, slugs, duplicates, and six documented search cases:
+
+```sh
+pnpm --dir web run check:seeds
+```
+
+With a local PocketBase superuser, import is idempotent: matching `(hive, slug)` records are updated and absent records are created. It fully validates before authenticating and never prints credentials or tokens:
+
+```sh
+PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" pnpm --dir web run seed:listings
+```
+
+Run it twice to confirm the second run reports updates and creates no duplicates. Charter Manta intentionally has no phone, email, or boarding location pending conflict resolution; unsupported search cases return no results.
+
 ## Run the authorization security check
 
 With the isolated PocketBase instance running, create a temporary local superuser in the dashboard. Run the following in Bash and prompt for its credentials so the password is not saved in shell history, an environment file, or a shared log:
