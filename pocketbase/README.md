@@ -1,10 +1,14 @@
 # Local PocketBase
 
-This repository uses PocketBase **v0.39.11** for local development. The version is pinned in `VERSION`; the installed binary, local data, and credentials are intentionally not committed. The committed migrations implement the schema documented in [docs/data-model.md](../docs/data-model.md).
+This is the canonical local setup and verification guide. The repository uses PocketBase **v0.39.11**, pinned in `VERSION`; the installed binary, local data, and credentials are intentionally not committed. The committed migrations implement the schema documented in [Initial data model](../docs/data-model.md).
+
+## Platform support
+
+The installer and local shell workflow documented here support **macOS and Linux only**, on amd64/x86_64 or arm64 hardware. Windows developers should use Windows Subsystem for Linux (WSL) for this documented workflow or manually download the matching PocketBase **v0.39.11** Windows binary from the [official release](https://github.com/pocketbase/pocketbase/releases/tag/v0.39.11), verify it against the published checksum, and adapt the executable path for their native shell. This repository does not provide or claim a tested native Windows installer script.
 
 ## Complete local workflow
 
-Node.js **20.19.0 or newer** is required for the web client. From the repository root, install its exact locked dependencies and the pinned PocketBase binary:
+Node.js **20.19.0 or newer** is required for the web client. From the repository root on macOS, Linux, or WSL, install its exact locked dependencies and the pinned PocketBase binary:
 
 ```sh
 npm --prefix web ci
@@ -25,14 +29,14 @@ Start PocketBase from the repository root in its own terminal:
 
 The explicit data and migration paths isolate NooBeehood from every other local or deployed PocketBase application. Open <http://127.0.0.1:8090/_/> and create the first local superuser interactively in the dashboard. Use local-only credentials and do not commit them.
 
-In a second terminal, create the ignored web environment file and start Vite:
+In a second terminal, create the web environment file and start Vite:
 
 ```sh
 cp web/.env.example web/.env
 npm --prefix web run dev
 ```
 
-Run the type/static check and production build from the repository root:
+`web/.env` is ignored by Git and points the browser client to this isolated local PocketBase service. Run the type/static check and production build from the repository root:
 
 ```sh
 npm --prefix web run check
@@ -42,7 +46,7 @@ test -f web/build/200.html
 
 ## Run the authorization security check
 
-With the isolated PocketBase instance running, create a temporary local superuser in the dashboard. Prompt for its credentials so the password is not saved in shell history, an environment file, or a shared log:
+With the isolated PocketBase instance running, create a temporary local superuser in the dashboard. Run the following in Bash and prompt for its credentials so the password is not saved in shell history, an environment file, or a shared log:
 
 ```bash
 read -r -p 'Temporary PocketBase superuser email: ' PB_SUPERUSER_EMAIL

@@ -62,7 +62,7 @@ This rule applies to application code. PocketBase remains the remote backend ser
 
 PocketBase is the backend service for the web and future native clients. Local development uses the pinned **v0.39.11** binary, committed migrations, and a project-local ignored data directory. The binary, data, and superuser credentials are not committed. The implemented collections and exact authorization rules are documented in [Initial data model](data-model.md).
 
-The local installer, isolated serve command, browser-client environment, and authorization security check are implemented and documented below. They do not replace or share data with any other local or VPS PocketBase application.
+The local installer, isolated serve command, browser-client environment, and authorization security check are implemented in the canonical [Local PocketBase](../pocketbase/README.md) workflow. They do not replace or share data with any other local or VPS PocketBase application.
 
 Development will have separate local, staging, and production environments. Staging will use `staging.noobeehood.com` and `api-staging.noobeehood.com`; production will use `noobeehood.com` and `api.noobeehood.com`. Configuration for both deployed environments remains deferred. Each environment must have separate PocketBase data, OAuth callbacks, email settings, and R2 paths or buckets as appropriate.
 
@@ -70,46 +70,9 @@ Production deployment will use a separate PocketBase process/service, database d
 
 ## Local developer workflow
 
-Node.js **20.19.0 or newer** is required. From the repository root:
+Node.js **20.19.0 or newer** and PocketBase **v0.39.11** are the pinned local baseline. The [canonical Local PocketBase guide](../pocketbase/README.md) contains the exact install, isolated serve, dashboard superuser, ignored environment, web startup, validation, safe credential prompt, and security-check commands, plus cleanup guidance.
 
-```sh
-npm --prefix web ci
-./scripts/install-pocketbase.sh
-./pocketbase/pocketbase serve \
-  --dir=./pocketbase/pb_data \
-  --migrationsDir=./pocketbase/pb_migrations \
-  --http=127.0.0.1:8090
-```
-
-The data directory is ignored; the migration directory is committed. Open <http://127.0.0.1:8090/_/> and create the first local superuser in the dashboard. In another terminal:
-
-```sh
-cp web/.env.example web/.env
-npm --prefix web run dev
-```
-
-`web/.env` is ignored. Run the static validation from the repository root:
-
-```sh
-npm --prefix web run check
-npm --prefix web run build
-test -f web/build/200.html
-```
-
-For the authorization check, create a temporary local superuser in the dashboard and pass it only to the test process with safely prompted shell variables:
-
-```bash
-read -r -p 'Temporary PocketBase superuser email: ' PB_SUPERUSER_EMAIL
-read -r -s -p 'Temporary PocketBase superuser password: ' PB_SUPERUSER_PASSWORD
-printf '\n'
-PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \
-  PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" \
-  PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" \
-  npm --prefix web run test:pocketbase
-unset PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
-```
-
-Delete the temporary superuser afterward. The exact success line is `PocketBase security checks passed`. See [Local PocketBase](../pocketbase/README.md) for installer requirements and cleanup guidance.
+That documented installer and local shell workflow support macOS and Linux only. Windows developers should use WSL for the documented workflow or manually install the matching pinned PocketBase binary as described in the canonical guide; this repository does not claim a tested native Windows installer script.
 
 ## Authentication
 
