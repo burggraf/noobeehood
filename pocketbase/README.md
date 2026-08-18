@@ -55,11 +55,7 @@ test -f web/build/200.html
 
 ## Validate and import verified listings
 
-Run the stdlib-only prevalidation before importing. It checks the allowlist, required fields, lengths, URLs, ISO dates, slugs, duplicates, and six documented search cases:
-
-```sh
-pnpm --dir web run check:seeds
-```
+The `check:seeds` step in the canonical verification sequence above is the stdlib-only prevalidation; it checks the allowlist, required fields, lengths, URLs, ISO dates, slugs, duplicates, and six documented search cases without network access.
 
 With a local PocketBase superuser, import is idempotent: matching `(hive, slug)` records are updated, absent records are created, and already-matching records are unchanged. The importer fully validates both seed files before authenticating, refuses duplicate existing slugs, rolls back records it changed if a later operation fails, and never prints credentials or tokens:
 
@@ -68,10 +64,10 @@ Prompt for the temporary local credentials before importing so the password is n
 ```bash
 read -r -p 'Temporary PocketBase superuser email: ' PB_SUPERUSER_EMAIL
 read -r -s -p 'Temporary PocketBase superuser password: ' PB_SUPERUSER_PASSWORD
-printf '\\n'
-PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \\
-  PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" \\
-  PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" \\
+printf '\n'
+PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \
+  PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" \
+  PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" \
   pnpm --dir web run seed:listings
 unset PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
 ```
