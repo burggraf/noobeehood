@@ -95,7 +95,7 @@
 		<header class="discover-header">
 			<p class="eyebrow">{hive?.name ?? 'Neighborhood directory'}</p>
 			<h1 id="discover-heading">Discover local services</h1>
-			<p>Search trusted services and resources in your neighborhood.</p>
+			<p>Search local services and resources in your neighborhood.</p>
 		</header>
 
 		<form class="discover-search" method="GET" aria-label="Search directory">
@@ -131,7 +131,7 @@
 						<p>{listing.summary}</p>
 						<dl>
 							{#if listing.location}<div><dt>Location</dt><dd>{listing.location}</dd></div>{/if}
-							<div><dt>Verified</dt><dd>{formatVerificationDate(listing.last_verified_at)}</dd></div>
+							<div><dt>Verification</dt><dd>{listing.verification_method}, {formatVerificationDate(listing.last_verified_at)}</dd></div>
 						</dl>
 						<a class="detail-link" href={`/hives/${encodeURIComponent(hiveSlug)}/discover/${encodeURIComponent(listing.slug)}`}>View service details<span aria-hidden="true"> →</span></a>
 					</article>

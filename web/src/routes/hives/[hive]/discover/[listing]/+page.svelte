@@ -4,6 +4,7 @@
 	import { pb } from '$lib/pocketbase';
 	import type { Hive, Listing } from '$lib/types';
 	import { formatVerificationDate } from '$lib/date.js';
+	import { phoneLinks } from '$lib/phone.js';
 
 	const categoryLabels: Record<string, string> = {
 		'food-shopping-dining': 'Food, shopping & dining',
@@ -86,7 +87,7 @@
 			<p class="detail-summary">{listing.summary}</p>
 			<dl class="detail-facts">
 				{#if listing.location}<div><dt>Location</dt><dd>{listing.location}</dd></div>{/if}
-				{#if listing.phone}<div><dt>Phone</dt><dd><a href={`tel:${listing.phone}`}>{listing.phone}</a></dd></div>{/if}
+				{#if listing.phone}<div><dt>Phone</dt><dd>{#each phoneLinks(listing.phone) as phone, index}{#if index > 0}<span aria-hidden="true"> / </span>{/if}<a href={phone.href}>{phone.label}</a>{/each}</dd></div>{/if}
 				{#if listing.website}<div><dt>Website</dt><dd><a href={listing.website} rel="noopener noreferrer">{listing.website}</a></dd></div>{/if}
 				<div><dt>Verified</dt><dd>{verificationLabels[listing.verification_method] ?? listing.verification_method}, {formatVerificationDate(listing.last_verified_at)}</dd></div>
 				{#if listing.source_url}<div><dt>Source</dt><dd><a href={listing.source_url} rel="noopener noreferrer">{listing.source_url}</a></dd></div>{/if}

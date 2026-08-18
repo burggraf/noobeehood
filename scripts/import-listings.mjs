@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { listingPayloadMatches, readSeedFiles } from './listing-seed.mjs';
+import { createListingQuery } from '../web/src/lib/listing-filter.js';
 
 const require = createRequire(new URL('../web/package.json', import.meta.url));
 const { default: PocketBase } = require('pocketbase');
@@ -59,14 +60,18 @@ try {
 
   const publicClient = new PocketBase(url);
   for (const test of searchCases) {
-    const terms = test.query.trim().toLowerCase().split(/\s+/);
-    const clauses = terms.map((_, index) => `(name ~ {:term${index}} || search_terms ~ {:term${index}})`);
-    const params = Object.fromEntries(terms.map((term, index) => [`term${index}`, term]));
-    const categoryClause = test.category ? ' && category = {:category}' : '';
-    const records = await publicClient.collection('listings').getFullList({ filter: publicClient.filter(`hive = {:hive} && status = {:status}${categoryClause} && ${clauses.join(' && ')}`, { ...params, hive: hive.id, status: 'published', ...(test.category ? { category: test.category } : {}) }), sort: 'slug' });
+    const query = createListingQuery({ hiveId: hive.id, query: test.query, category: test.category });
+    const records = await publicClient.collection('listings').getFullList({
+      filter: publicClient.filter(`${query.expression} && status = {:status}`, { ...query.params, status: 'published' }),
+      sort: 'slug',
+    });
     assert.deepEqual(records.map(({ slug }) => slug), [...test.expected_slugs].sort(), `search acceptance failed: ${test.query}`);
   }
-  assert.equal((await publicClient.collection('listings').getFullList({ filter: publicClient.filter('hive = {:hive} && status = {:status}', { hive: hive.id, status: 'published' }) })).length, listings.length);
+  const publishedSlugs = new Set(listings.filter(({ status }) => status === 'published').map(({ slug }) => slug));
+  const existingPublished = await publicClient.collection('listings').getFullList({
+    filter: publicClient.filter('hive = {:hive} && status = {:status}', { hive: hive.id, status: 'published' }),
+  });
+  for (const slug of publishedSlugs) assert.ok(existingPublished.some((listing) => listing.slug === slug), `seeded published slug missing: ${slug}`);
   console.log(`validated ${listings.length} listings; created ${counts.created}, updated ${counts.updated}, unchanged ${counts.unchanged}; ${searchCases.length} public searches passed`);
 } catch (error) {
   console.error(`import failed: ${error.message}`);

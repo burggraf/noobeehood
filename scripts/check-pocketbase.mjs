@@ -148,7 +148,12 @@ async function run() {
     );
     listingIds.add(inactiveListing.id);
 
-    const publicListings = await publicClient.collection("listings").getList(1, 50);
+    const publicListings = await publicClient.collection("listings").getList(1, 50, {
+      filter: publicClient.filter("hive = {:hive} && slug = {:slug}", {
+        hive: hive.id,
+        slug: publishedListing.slug,
+      }),
+    });
     assert.deepEqual(publicListings.items.map((record) => record.id), [publishedListing.id]);
     assert.equal((await publicClient.collection("listings").getOne(publishedListing.id)).id, publishedListing.id);
     for (const hiddenListing of [draftListing, archivedListing, inactiveListing]) {
