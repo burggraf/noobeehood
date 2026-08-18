@@ -1,10 +1,11 @@
 import { pb } from '$lib/pocketbase';
 
 const safeError = 'Something went wrong. Please try again.';
+const invalidLoginError = 'Your email or password may be incorrect, or your email may not be verified.';
 
-function message(error: unknown, fallback = safeError) {
+function loginMessage(error: unknown) {
 	const status = (error as { status?: number })?.status;
-	return status === 400 || status === 401 ? 'Your email or password may be incorrect, or your email may not be verified.' : fallback;
+	return status === 400 || status === 401 || status === 403 ? invalidLoginError : safeError;
 }
 
 export async function signup(name: string, email: string, password: string, passwordConfirm: string) {
@@ -29,7 +30,7 @@ export async function login(email: string, password: string) {
 	try {
 		return await pb.collection('users').authWithPassword(email, password);
 	} catch (error) {
-		throw new Error(message(error));
+		throw new Error(loginMessage(error));
 	}
 }
 
