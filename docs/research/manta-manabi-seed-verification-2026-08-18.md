@@ -17,7 +17,7 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 - **Category:** Food, shopping, and dining
 - **Listing type:** Supermarket
 - **Verified claims:**
-  - **Current operation:** the current official store directory lists “**Supermaxi La Campiña**” and publishes “**De lunes a sábado de 10:00 a 20:30. Domingo y feriados de 10:00 a 20:00**.”
+  - **Current operation:** the current official store directory’s locality selector groups the entry as “**Manta**” (`optgroup label="Manta"`) with the option “**Supermaxi La Campiña**,” and publishes “**De lunes a sábado de 10:00 a 20:30. Domingo y feriados de 10:00 a 20:00**.”
   - **Name/type:** the official terms say “**SUPERMAXI Y MEGAMAXI es un formato de supermercados creados por Corporación Favorita C.A.**”; the branch directory names this location “**Supermaxi La Campiña**.”
   - **Location/service area:** “**Dirección: Av. 113 S/N y 4 de Noviembre (junto a la Urba. La Campiña)**.”
   - **Contact:** “**Teléfono: (05) 292-3500 / (05) 292-3400**.”
@@ -69,7 +69,7 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 
 ### Hospital General Dr. Rafael Rodríguez Zambrano
 
-- **Decision:** accept
+- **Decision:** reject
 - **Category:** Healthcare and insurance
 - **Listing type:** Public general hospital, second level of care
 - **Verified claims:**
@@ -83,7 +83,7 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 - **Verification method:** source_checked
 - **Verified on:** 2026-08-18
 - **Next review date:** 2026-09-18
-- **Notes/limitations:** ACESS states that its permit process applies to public and private health establishments and that a permit lasts one calendar year. Its public interface did not yield a stable current permit result for this hospital, so the record relies on the hospital’s official MSP site for operation and must be rechecked in one month. No individual specialty or professional registration is claimed.
+- **Notes/limitations:** Rejected: ACESS states that its permit process applies to public and private health establishments and that a permit lasts one calendar year, but no current applicable ACESS permit result was available for this public hospital. The hospital’s official MSP operation evidence does not replace the required permit evidence. No individual specialty or professional registration is claimed.
 
 ### MantaMed
 
@@ -123,7 +123,7 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 
 ### Hospital General Manta (IESS) — replacement attempt for MantaMed
 
-- **Decision:** accept
+- **Decision:** reject
 - **Category:** Healthcare and insurance
 - **Listing type:** IESS general hospital
 - **Verified claims:**
@@ -137,7 +137,7 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 - **Verification method:** source_checked
 - **Verified on:** 2026-08-18
 - **Next review date:** 2026-09-18
-- **Notes/limitations:** Accepted as the same-category replacement because the 2026 IESS operation evidence, exact unit identity, Manta location, contact, and limited offering all pass. ACESS applicability is documented, but its public interface did not yield a stable current permit result; recheck within one month. Do not infer access eligibility, appointments, other specialties, or emergency hours.
+- **Notes/limitations:** Rejected as a same-category replacement: although the 2026 IESS operation evidence, exact unit identity, Manta location, contact, and limited offering pass, no current applicable ACESS permit result was available. ACESS applicability is documented, but operation evidence does not replace the required permit evidence. Do not infer access eligibility, appointments, other specialties, or emergency hours.
 
 ## Housing and household services
 
@@ -211,7 +211,7 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 - **Verification method:** source_checked
 - **Verified on:** 2026-08-18
 - **Next review date:** 2026-11-18
-- **Notes/limitations:** Accepted because current Manta provider/contact evidence and the current regulator record agree on name, city, and main phone. The provider and ARCSA street descriptions differ, so a future listing should use the regulator address or omit street detail pending direct confirmation. No product, certification, toxicity, effectiveness, or safety claim is accepted.
+- **Notes/limitations:** Accepted because current Manta provider/contact evidence and the current regulator record agree on name, city, and main phone. Reproducible ARCSA legal-name search term: `RCR` (with `tipo_permiso=vigentes` and `r_tipobusqueda=razonsocial`). The provider and ARCSA street descriptions differ, so a future listing should use the regulator address or omit street detail pending direct confirmation. No product, certification, toxicity, effectiveness, or safety claim is accepted.
 
 ## Transportation, travel, and experiences
 
@@ -257,9 +257,9 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 - **Category:** Transportation, travel, and experiences
 - **Listing type:** Registered maritime tourism transport and tourism operator
 - **Verified claims:**
-  - **Current operation:** the provider’s live booking information says “**Nuestro velero se encuentra fondeado en el Puerto de Manta**”; the current MINTUR national catastro contains two matching Charter Manta rows.
+  - **Current operation:** the current MINTUR national catastro contains two matching Charter Manta rows.
   - **Name/type:** MINTUR row one: “**CHARTER MANTA | TRANSPORTE TURÍSTICO | MARÍTIMO, FLUVIAL Y LACUSTRE | Categoría Única**”; row two: “**CHARTER MANTA | AGENCIAMIENTO TURÍSTICO | AGENCIA OPERADORA DE TURISMO | Categoría Única**.”
-  - **Location/service area:** both MINTUR rows say “**MANABÍ | MANTA | MANTA | urbana**”; the provider says boarding is at “**el muelle artesanal situado a la derecha de la entrada Manta Yacht Club**.”
+  - **Location/service area:** both MINTUR rows say “**MANABÍ | MANTA | MANTA | urbana**.” No boarding location is claimed because the provider pages conflict on that detail.
   - **Contact:** the provider contact page publishes “**+593 939 177 869**” and “**comercial@chartermanta.com**.” MINTUR publishes `0979055777` and, for the operator row, `info@chartermanta.com`.
   - **Claimed offerings:** only crewed sailboat charter in Manta; the provider says “**ALQUILER DE YATE VELERO CON CAPITÁN EN MANTA, ECUADOR**.”
 - **Official source URL:** https://chartermanta.com/ ; https://chartermanta.com/contacto/ ; https://chartermanta.com/reservas-online-velero-yate-barco-manta-ecuador/
@@ -267,7 +267,7 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 - **Verification method:** source_checked
 - **Verified on:** 2026-08-18
 - **Next review date:** 2026-09-18
-- **Notes/limitations:** The official catastro page was modified 2026-08-06 and links the quoted workbook. The MINTUR maritime-transport and tourism-operator rows satisfy the requested tourism/maritime registration evidence; no separate vessel registry or captain credential is claimed. Provider and MINTUR phone/email differ, so both channels are recorded and must be confirmed before seeding. Whale watching, fishing, courses, passenger capacity, routes, safety, seasons, and availability are excluded.
+- **Notes/limitations:** The official catastro page was modified 2026-08-06 and links the quoted workbook. The MINTUR maritime-transport and tourism-operator rows independently support the registered offering and Manta location; no boarding location is publishable because provider pages conflict. No separate vessel registry or captain credential is claimed. Provider and MINTUR phone/email differ, so both public business channels are recorded and must be confirmed before seeding. Whale watching, fishing, courses, passenger capacity, routes, safety, seasons, and availability are excluded.
 
 ### AESLIT Cía. Ltda. — replacement attempt for Terminal Terrestre
 
@@ -290,10 +290,11 @@ For the ARCSA public registry, the method was an HTTP POST to its public `report
 ## Review result
 
 - **Initial queue:** 12 candidates, three per category.
-- **Initial candidates accepted:** 9 — Supermaxi La Campiña, Mercado Central Municipal, Mall del Pacífico, Hospital General Dr. Rafael Rodríguez Zambrano, Fybeca Malecón, CNEL Agencia Manta, EPAM, Aeropuerto Internacional Eloy Alfaro, and Charter Manta.
-- **Initial candidates rejected:** 3 — MantaMed, Fumigerbo, and Terminal Terrestre Luis Valdivieso Morán.
-- **Replacement attempts accepted:** 3 — Hospital General Manta (for MantaMed), RCR del Ecuador (for Fumigerbo), and AESLIT Cía. Ltda. (for Terminal Terrestre).
-- **Publishable result:** 12 accepted, balanced at three per category. The count was reached without retaining any rejected record.
+- **Initial candidates accepted:** 8 — Supermaxi La Campiña, Mercado Central Municipal, Mall del Pacífico, Fybeca Malecón, CNEL Agencia Manta, EPAM, Aeropuerto Internacional Eloy Alfaro, and Charter Manta.
+- **Initial candidates rejected:** 4 — Hospital General Dr. Rafael Rodríguez Zambrano, MantaMed, Fumigerbo, and Terminal Terrestre Luis Valdivieso Morán.
+- **Replacement attempts accepted:** 2 — RCR del Ecuador (for Fumigerbo) and AESLIT Cía. Ltda. (for Terminal Terrestre).
+- **Replacement attempts rejected:** 1 — Hospital General Manta (for MantaMed), because no current applicable ACESS permit was available.
+- **Publishable result:** 10 accepted, not balanced at three per category: Food, shopping, and dining (3); Healthcare and insurance (1); Housing and household services (3); Transportation, travel, and experiences (3). The public hospital candidates and the hospital replacement attempt are excluded rather than retained to preserve an artificial count of 12.
 
 ### Link, claim, and privacy self-check
 
