@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { signup } from '$lib/auth';
 	let name = $state(''), email = $state(''), password = $state(''), passwordConfirm = $state('');
-	let pending = $state(false), error = $state(''), success = $state('');
-	async function submit() { if (pending) return; pending = true; error = ''; success = ''; try { await signup(name, email, password, passwordConfirm); success = 'Account created. Check your email to verify it before logging in.'; } catch (e) { error = e instanceof Error ? e.message : 'We could not create your account. Please try again.'; } finally { pending = false; } }
+	let pending = $state(false), error = $state(''), success = $state(''), verificationFailed = $state(false);
+	async function submit() { if (pending) return; pending = true; error = ''; success = ''; verificationFailed = false; try { const result = await signup(name, email, password, passwordConfirm); verificationFailed = !result.verificationSent; success = result.verificationSent ? 'Account created. Check your email to verify it before logging in.' : 'Account created, but we could not send a verification email.'; } catch (e) { error = e instanceof Error ? e.message : 'We could not create your account. Please try again.'; } finally { pending = false; } }
 </script>
 <svelte:head><title>Create account | NooBeehood</title></svelte:head>
 <section class="form-page wrapper"><h1>Create your account</h1><p>Join your neighborhood.</p>
@@ -12,5 +12,5 @@
 <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required bind:value={password} />
 <label for="passwordConfirm">Confirm password</label><input id="passwordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" required bind:value={passwordConfirm} />
 <button class="button primary" disabled={pending}>{pending ? 'Creating…' : 'Create account'}</button>
-<p id="form-status" class:error role={error ? 'alert' : 'status'}>{error || success}</p>
+<p id="form-status" class:error role={error ? 'alert' : 'status'}>{error || success}{#if verificationFailed} <a href="/login">Log in</a> to resend verification.{/if}</p>
 </form><p>Already a member? <a href="/login">Log in</a>.</p></section>

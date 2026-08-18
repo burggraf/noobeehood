@@ -14,12 +14,18 @@ function isOperationalEmailFailure(error: unknown) {
 }
 
 export async function signup(name: string, email: string, password: string, passwordConfirm: string) {
+	let user;
 	try {
-		const user = await pb.collection('users').create({ name, email, password, passwordConfirm });
-		await pb.collection('users').requestVerification(user.email);
-		return user;
+		user = await pb.collection('users').create({ name, email, password, passwordConfirm });
 	} catch {
 		throw new Error('We could not create your account. Check your details and try again.');
+	}
+
+	try {
+		await pb.collection('users').requestVerification(user.email);
+		return { user, verificationSent: true };
+	} catch {
+		return { user, verificationSent: false };
 	}
 }
 
