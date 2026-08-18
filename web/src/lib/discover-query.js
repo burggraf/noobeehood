@@ -10,7 +10,7 @@ export function readDiscoverParams(url) {
   const category = url.searchParams.get('category') || '';
   const rawPage = Number(url.searchParams.get('page') || 1);
   return {
-    query: url.searchParams.get('q') || '',
+    query: (url.searchParams.get('q') || '').trim(),
     category: DISCOVER_CATEGORIES.includes(category) ? category : '',
     page: Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1,
   };

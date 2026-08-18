@@ -31,13 +31,13 @@ function translateDirectoryError(error: unknown): never {
 	throw new DirectoryUnavailableError();
 }
 
-export async function getActiveHive(slug: string): Promise<Hive> {
+export async function getActiveHive(slug: string, requestKey?: string): Promise<Hive> {
 	const filter = pb.filter('slug = {:slug} && status = {:status}', {
 		slug,
 		status: 'active',
 	});
 	try {
-		return await pb.collection('hives').getFirstListItem<Hive>(filter);
+		return await pb.collection('hives').getFirstListItem<Hive>(filter, requestKey ? { requestKey } : undefined);
 	} catch (error) {
 		translateDirectoryError(error);
 	}
@@ -48,6 +48,7 @@ export async function listListings(input: {
 	query: string;
 	category: string;
 	page: number;
+	requestKey?: string;
 }): Promise<ListingPage> {
 	const { expression, params, page, perPage } = createListingQuery(input);
 	const filter = pb.filter(expression, params);
@@ -55,6 +56,7 @@ export async function listListings(input: {
 		return await pb.collection('listings').getList<Listing>(page, perPage, {
 			filter,
 			sort: 'name',
+			...(input.requestKey ? { requestKey: input.requestKey } : {}),
 		});
 	} catch (error) {
 		translateDirectoryError(error);
