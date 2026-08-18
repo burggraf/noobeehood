@@ -8,7 +8,6 @@
 <svelte:head>
 	<title>NooBeehood | Your new neighborhood</title>
 	<meta name="description" content="Find your footing, your people, and your place in a new community." />
-	<link rel="icon" href="/favicon.ico" sizes="32x32" />
 </svelte:head>
 
 <a class="skip-link" href="#main-content">Skip to main content</a>
