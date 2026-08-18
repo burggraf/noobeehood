@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
+umask 077
 
 SCRIPT_DIR=${0%/*}
 [ "$SCRIPT_DIR" = "$0" ] && SCRIPT_DIR=.
@@ -34,12 +35,12 @@ esac
 
 ASSET="pocketbase_${VERSION}_${OS}_${ARCH}.zip"
 BASE_URL="https://github.com/pocketbase/pocketbase/releases/download/v${VERSION}"
-TMP_PREFIX="${TMPDIR:-/tmp}/pocketbase-install.$$"
-ZIP_FILE="${TMP_PREFIX}-${ASSET}"
-CHECKSUM_FILE="${TMP_PREFIX}-checksums.txt"
+TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/pocketbase-install.XXXXXX")
+ZIP_FILE="$TMP_DIR/$ASSET"
+CHECKSUM_FILE="$TMP_DIR/checksums.txt"
 
 cleanup() {
-	rm -f "$ZIP_FILE" "$CHECKSUM_FILE"
+	rm -rf "$TMP_DIR"
 }
 trap cleanup 0 1 2 3 15
 

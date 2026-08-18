@@ -13,7 +13,10 @@ From the repository root:
 ```
 
 The installer selects the Darwin or Linux amd64/arm64 release, verifies its
-SHA-256 checksum, and installs only the `pocketbase` executable.
+SHA-256 checksum, and installs only the `pocketbase` executable. It requires a
+POSIX shell plus `curl`, `mktemp`, `rm`, `shasum`, `uname`, and `unzip`. Linux
+systems must provide `shasum` (usually from the Perl package); the installer
+does not silently substitute an unverified checksum tool.
 
 ## Serve locally
 
@@ -28,21 +31,3 @@ Keep local data and migrations isolated under `pocketbase/`:
 
 Open <http://127.0.0.1:8090/_/> to create the first local superuser
 interactively. Do not commit the credentials.
-
-Alternatively, create one with the v0.39.11 CLI. Enter the values locally so
-they are not stored in this repository:
-
-```sh
-printf 'Email: '
-IFS= read -r SUPERUSER_EMAIL
-printf 'Password: '
-IFS= read -r SUPERUSER_PASSWORD
-./pocketbase/pocketbase superuser create \
-  "$SUPERUSER_EMAIL" "$SUPERUSER_PASSWORD" \
-  --dir=./pocketbase/pb_data
-unset SUPERUSER_EMAIL SUPERUSER_PASSWORD
-```
-
-The `serve --dir`, `serve --migrationsDir`, `serve --http`, and global
-`superuser create --dir` flags are supported by PocketBase v0.39.11. The
-`superuser create` email and password are positional arguments.
