@@ -9,7 +9,7 @@ The built-in email/password identity is `email`. Password authentication is enab
 | Field | Definition |
 | --- | --- |
 | `name` | required text, maximum 120 characters |
-| `is_beekeeper` | boolean, default false; clients cannot assign it |
+| `is_beekeeper` | boolean, false by the PocketBase v0.39.11 BoolField zero value/default; clients cannot assign it |
 
 Rules:
 
@@ -31,7 +31,7 @@ A client may register without `is_beekeeper`, but cannot self-promote. Beekeeper
 | --- | --- |
 | `name` | required text, maximum 120 characters |
 | `slug` | required text, maximum 120 characters, unique |
-| `status` | single select: `active`, `inactive` |
+| `status` | required single select: `active`, `inactive` |
 
 Rules:
 

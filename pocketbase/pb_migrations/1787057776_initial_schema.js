@@ -41,7 +41,7 @@ migrate((app) => {
     fields: [
       { name: "name", type: "text", required: true, max: 120 },
       { name: "slug", type: "text", required: true, max: 120 },
-      { name: "status", type: "select", values: ["active", "inactive"], maxSelect: 1 },
+      { name: "status", type: "select", required: true, values: ["active", "inactive"], maxSelect: 1 },
     ],
     indexes: ["CREATE UNIQUE INDEX idx_hives_slug ON hives (slug)"],
   });
