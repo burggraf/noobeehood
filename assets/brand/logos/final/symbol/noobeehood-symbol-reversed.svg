@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood symbol, reversed</title>
+  <desc id="desc">A simplified forward-tilted bee with two rounded wings and a hexagonal body.</desc>
+  <g>
+    <g transform="rotate(-8 160 180)">
+      <path d="M130 179C86 179 54 158 52 126C50 100 68 82 93 85C121 89 144 114 148 157L130 179Z" fill="none" stroke="#FFFEF8" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M190 179C234 179 266 158 268 126C270 100 252 82 227 85C199 89 176 114 172 157L190 179Z" fill="none" stroke="#FFFEF8" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M160 107L206 134V250L160 277L114 250V134L160 107Z" fill="none" stroke="#FFFEF8" stroke-width="12" stroke-linejoin="round"/>
+      <path d="M116 176H204M116 218H204" fill="none" stroke="#FFFEF8" stroke-width="14"/>
+    </g>
+  </g>
+</svg>
