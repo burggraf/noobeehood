@@ -52,7 +52,8 @@ Follow [Local PocketBase](pocketbase/README.md), the canonical setup and verific
 - [Public directory and search design](docs/plans/2026-08-18-public-directory-design.md)
 - [Public directory and search implementation plan](docs/plans/2026-08-18-public-directory-implementation.md)
 - [Manta + Manabí seed listing candidates](docs/research/manta-manabi-seed-listing-candidates.md)
+- [Manta + Manabí seed verification ledger](docs/research/manta-manabi-seed-verification-2026-08-18.md)
 
 ## Status
 
-The local website, PocketBase schema, email/password authentication flows, and authorization security check are implemented. OAuth, Tauri, staging and production deployment, Cloudflare R2, and Resend deployment configuration remain explicitly deferred.
+The local website foundation, public Manta + Manabí directory (search, category filtering, pagination, detail and empty/error states), PocketBase schema, validated ten-listing seed importer, email/password authentication flows, and authorization security check are implemented. Public listing reads are anonymous; listing publication and all current mutations remain Beekeeper-only. OAuth, Tauri, Queen/Worker mutations, contributor UI, staging and production deployment, Cloudflare R2, and Resend deployment configuration remain explicitly deferred.

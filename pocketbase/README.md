@@ -8,14 +8,15 @@ The installer and local shell workflow documented here support **macOS and Linux
 
 ## Complete local workflow
 
-Node.js **20.19.0 or newer** and pnpm **10.34.5** are required for the web client. The version is pinned in `web/package.json`; Corepack-compatible pnpm installations select it automatically. From the repository root on macOS, Linux, or WSL, install the exact locked dependencies and pinned PocketBase binary:
+Node.js **20.19.0 or newer** and pnpm **10.34.5** are required for the web client. The version is pinned in `web/package.json`; Corepack-compatible pnpm installations select it automatically. From the repository root on macOS, Linux, or WSL, this is the canonical fresh dependency and binary sequence:
 
 ```sh
 corepack enable
 pnpm --dir web --version # 10.34.5
+rm -rf web/node_modules
 pnpm --dir web install --frozen-lockfile
 ./scripts/install-pocketbase.sh
-./pocketbase/pocketbase --version
+./pocketbase/pocketbase --version # PocketBase v0.39.11
 ```
 
 The PocketBase installer selects the Darwin or Linux amd64/arm64 release, verifies its SHA-256 checksum, and installs only the `pocketbase` executable. It requires a POSIX shell plus `curl`, `mktemp`, `rm`, `shasum`, `uname`, and `unzip`. Linux systems must provide `shasum` (usually from the Perl package); the installer does not silently substitute an unverified checksum tool.
@@ -40,13 +41,17 @@ pnpm --dir web run dev
 
 `web/.env` is ignored by Git and points the browser client to this isolated local PocketBase service. After this initial setup, `./dev.sh` starts both services and stops those it started when you press Ctrl+C.
 
-Run the type/static check and production build from the repository root:
+Run the complete web verification sequence from the repository root after a fresh install:
 
 ```sh
+pnpm --dir web run check:seeds
+pnpm --dir web run test:unit
 pnpm --dir web run check
 pnpm --dir web run build
 test -f web/build/200.html
 ```
+
+`check:seeds` validates the ten committed listings and six search cases without network access. `test:unit` covers query/filter/date behavior. `check` runs Svelte diagnostics and `build` creates the static site; `web/build/200.html` is the SPA fallback artifact.
 
 ## Validate and import verified listings
 
@@ -56,13 +61,22 @@ Run the stdlib-only prevalidation before importing. It checks the allowlist, req
 pnpm --dir web run check:seeds
 ```
 
-With a local PocketBase superuser, import is idempotent: matching `(hive, slug)` records are updated and absent records are created. It fully validates before authenticating and never prints credentials or tokens:
+With a local PocketBase superuser, import is idempotent: matching `(hive, slug)` records are updated, absent records are created, and already-matching records are unchanged. The importer fully validates both seed files before authenticating, refuses duplicate existing slugs, rolls back records it changed if a later operation fails, and never prints credentials or tokens:
 
-```sh
-PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" pnpm --dir web run seed:listings
+Prompt for the temporary local credentials before importing so the password is not typed into shell history or stored in a file:
+
+```bash
+read -r -p 'Temporary PocketBase superuser email: ' PB_SUPERUSER_EMAIL
+read -r -s -p 'Temporary PocketBase superuser password: ' PB_SUPERUSER_PASSWORD
+printf '\\n'
+PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \\
+  PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" \\
+  PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" \\
+  pnpm --dir web run seed:listings
+unset PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
 ```
 
-Run it twice to confirm the second run reports updates and creates no duplicates. Charter Manta intentionally has no phone, email, or boarding location pending conflict resolution; unsupported search cases return no results.
+Run the command twice. The first run must create 10 listings; the second must create 0 and report 10 unchanged (or updates if the database was edited). The importer also executes all six public search cases against the running API. Charter Manta intentionally has no phone, email, or boarding location pending conflict resolution; unsupported search cases return no results.
 
 ## Run the authorization security check
 

@@ -59,7 +59,11 @@ Use SvelteKit's static output with a client-only configuration:
 
 This rule applies to application code. PocketBase remains the remote backend service and owns persistence, authentication, authorization rules, files, and realtime APIs.
 
-## PocketBase
+## Public directory and listing publication
+
+The implemented public directory is a browser-only Svelte route at `/hives/[hive]/discover`, with listing details at `/hives/[hive]/discover/[slug]`. Anonymous clients can read only active hives and `published` listings because the PocketBase list/view rules enforce both conditions; the client repeats the hive, slug, and published filters for correct routing and missing-entry states. Search binds one trimmed query across listing name, type, summary, location, and curated search terms, with allowlisted category filters and 20-item pagination. Unsupported hives, no-result searches, empty directories, unavailable APIs, and missing details have explicit UI states.
+
+Seed publication is separate from the schema migration. `pocketbase/seeds/manta-manabi-listings.json` contains ten validated published records and `manta-manabi-search-cases.json` contains six acceptance cases. `pnpm --dir web run check:seeds` performs offline validation; `pnpm --dir web run seed:listings` authenticates with a temporary superuser and upserts by `(hive, slug)`, then verifies the public search cases. The importer is idempotent and Beekeeper-only through PocketBase mutation rules. Queen/Worker publication and mutation permissions are not implemented.
 
 PocketBase is the backend service for the web and future native clients. Local development uses the pinned **v0.39.11** binary, committed migrations, and a project-local ignored data directory. The binary, data, and superuser credentials are not committed. The implemented collections and exact authorization rules are documented in [Initial data model](data-model.md).
 
