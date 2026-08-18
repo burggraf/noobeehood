@@ -11,6 +11,8 @@
 	<link rel="icon" href="/brand/icons/noobeehood-app-icon.svg" />
 </svelte:head>
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <header class="site-header">
 	<div class="wrapper header-inner">
 		<a href="/" aria-label="NooBeehood home"><img class="logo" src="/brand/logos/noobeehood-horizontal-full-color.svg" alt="NooBeehood" /></a>
@@ -28,6 +30,6 @@
 	</div>
 </header>
 
-<main>{@render children()}</main>
+<main id="main-content">{@render children()}</main>
 
 <footer class="site-footer"><div class="wrapper"><small>Your new neighborhood.</small></div></footer>
