@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1800 2300" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood brand kit overview</title>
+  <desc id="desc">The approved logo, brand palette, app icon, splash art, and three welcome graphics.</desc>
+  <rect width="1800" height="2300" fill="#FFF9E8"/>
+  <text x="100" y="105" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="54" font-weight="700">NooBeehood brand kit</text>
+  <text x="100" y="160" fill="#D97706" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="28">Your new neighborhood.</text>
+  <image x="100" y="190" width="1600" height="480" xlink:href="logos/final/horizontal/noobeehood-horizontal-full-color.svg"/>
+
+  <text x="100" y="715" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="34" font-weight="700">Color system</text>
+  <g font-family="Avenir Next, Nunito Sans, sans-serif" font-size="20" fill="#241F17">
+    <rect x="100" y="750" width="210" height="130" rx="18" fill="#F6B800"/><text x="120" y="920">Bee Gold</text>
+    <rect x="330" y="750" width="210" height="130" rx="18" fill="#D97706"/><text x="350" y="920">Honey Amber</text>
+    <rect x="560" y="750" width="210" height="130" rx="18" fill="#241F17"/><text x="580" y="920">Hive Charcoal</text>
+    <rect x="790" y="750" width="210" height="130" rx="18" fill="#FFF1B8" stroke="#D97706" stroke-width="2"/><text x="810" y="920">Beeswax</text>
+    <rect x="1020" y="750" width="210" height="130" rx="18" fill="#FFF9E8" stroke="#D97706" stroke-width="2"/><text x="1040" y="920">Honeycomb Cream</text>
+    <rect x="1250" y="750" width="210" height="130" rx="18" fill="#FFFEF8" stroke="#D97706" stroke-width="2"/><text x="1270" y="920">Pollen White</text>
+    <rect x="1480" y="750" width="210" height="130" rx="18" fill="#3F6B45"/><text x="1500" y="920">Meadow Green</text>
+  </g>
+
+  <text x="100" y="1015" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="34" font-weight="700">App icon and splash</text>
+  <image x="100" y="1060" width="520" height="520" xlink:href="icons/noobeehood-app-icon.svg"/>
+  <image x="730" y="1060" width="300" height="650" xlink:href="graphics/splash/splash-light-portrait.svg"/>
+  <image x="1120" y="1060" width="520" height="520" xlink:href="graphics/splash/splash-dark-landscape.svg"/>
+
+  <text x="100" y="1810" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="34" font-weight="700">Welcome graphics</text>
+  <image x="100" y="1850" width="500" height="333" xlink:href="graphics/welcome/find-your-footing.svg"/>
+  <image x="650" y="1850" width="500" height="333" xlink:href="graphics/welcome/find-your-people.svg"/>
+  <image x="1200" y="1850" width="500" height="333" xlink:href="graphics/welcome/build-your-hive.svg"/>
+</svg>
