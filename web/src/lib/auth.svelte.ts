@@ -5,9 +5,11 @@ export const auth = $state<{ currentUser: User | null }>({
 	currentUser: pb.authStore.record as User | null
 });
 
-pb.authStore.onChange((_token, record) => {
+const unsubscribe = pb.authStore.onChange((_token, record) => {
 	auth.currentUser = record as User | null;
 });
+
+import.meta.hot?.dispose(unsubscribe);
 
 export function logout() {
 	pb.authStore.clear();
