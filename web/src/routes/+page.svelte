@@ -50,9 +50,13 @@
 		{:else if status === 'empty'}
 			<p class="state">No active neighborhoods yet. Check back soon.</p>
 		{:else}
-			<div class="hive-card">
-				<h3>Manta + Manabí</h3>
-				<p>A first place to find local answers, useful guides, and community life.</p>
+			<div class="hive-list">
+				{#each hives as hive (hive.id)}
+					<article class="hive-card">
+						<h3>{hive.name}</h3>
+						<p>A place to find local answers, useful guides, and community life.</p>
+					</article>
+				{/each}
 			</div>
 		{/if}
 	</div>
