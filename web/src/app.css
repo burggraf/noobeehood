@@ -70,8 +70,22 @@ form .button { margin-top: .8rem; width: fit-content; }
 .listing-card dl div { display: grid; grid-template-columns: 5.5rem 1fr; gap: .5rem; }
 .listing-card dt { font-weight: 700; }
 .listing-card dd { margin: 0; overflow-wrap: anywhere; }
-.detail-link { margin-top: auto; font-weight: 700; }
+.detail-link { display: inline-flex; align-items: center; gap: .25rem; margin-top: auto; font-weight: 700; }
 .pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: center; margin-top: 2rem; }
+.detail-page { max-width: 52rem; padding-block: clamp(2.5rem, 7vw, 5rem); }
+.back-link { display: inline-block; margin-bottom: 2rem; font-weight: 700; }
+.detail-header { margin-bottom: 2rem; }
+.detail-header h1 { max-width: 18ch; margin-bottom: .5rem; font-size: clamp(2.5rem, 8vw, 5rem); }
+.detail-header .listing-type, .detail-category { margin-bottom: .4rem; font-weight: 700; }
+.detail-category { color: var(--color-text-secondary, var(--color-text-primary)); }
+.detail-content { max-width: 42rem; }
+.detail-summary { font-size: 1.2rem; line-height: 1.6; }
+.detail-facts { display: grid; gap: .8rem; margin-block: 2rem; }
+.detail-facts div { display: grid; grid-template-columns: 7rem 1fr; gap: .75rem; }
+.detail-facts dt { font-weight: 700; }
+.detail-facts dd { margin: 0; overflow-wrap: anywhere; }
+.detail-reminder { padding: 1rem 1.25rem; border-left: .35rem solid var(--color-action-primary); background: var(--color-surface-selected); }
+.detail-reminder p { margin: .35rem 0 0; }
 @media (min-width: 48rem) {
 	.discover-search { grid-template-columns: minmax(12rem, 1fr) minmax(12rem, 1fr) auto; align-items: end; padding: 1.25rem; }
 	.discover-search .button { width: auto; }

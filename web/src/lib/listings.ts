@@ -63,10 +63,10 @@ export async function listListings(input: {
 	}
 }
 
-export async function getListing(hiveId: string, slug: string): Promise<Listing> {
+export async function getListing(hiveId: string, slug: string, requestKey?: string): Promise<Listing> {
 	const filter = pb.filter('hive = {:hive} && slug = {:slug}', { hive: hiveId, slug });
 	try {
-		return await pb.collection('listings').getFirstListItem<Listing>(filter);
+		return await pb.collection('listings').getFirstListItem<Listing>(filter, requestKey ? { requestKey } : undefined);
 	} catch (error) {
 		translateDirectoryError(error);
 	}

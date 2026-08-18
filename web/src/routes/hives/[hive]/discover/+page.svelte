@@ -3,6 +3,7 @@
 	import { discoverUrl, DISCOVER_CATEGORIES, readDiscoverParams } from '$lib/discover-query.js';
 	import type { Hive, Listing } from '$lib/types';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pocketbase';
 
 	const categoryLabels: Record<string, string> = {
@@ -40,6 +41,14 @@
 				if (disposed || generation !== loadGeneration) return;
 				const result = await listListings({ hiveId: activeHive.id, ...params, requestKey: listingsRequestKey });
 				if (disposed || generation !== loadGeneration) return;
+				if (params.page > result.totalPages && result.totalPages > 0) {
+					await goto(discoverUrl(`/hives/${encodeURIComponent(slug)}/discover`, { ...params, page: result.totalPages }), {
+						replaceState: true,
+						keepFocus: true,
+						noScroll: true,
+					});
+					return;
+				}
 				hive = activeHive;
 				listings = [...result.items].sort((a, b) => a.name.localeCompare(b.name));
 				totalItems = result.totalItems;
@@ -112,9 +121,9 @@
 		{#if status === 'loading'}
 			<p class="state" role="status" aria-live="polite">Loading services…</p>
 		{:else if status === 'empty'}
-			<p class="state">No services have been added to this directory yet.</p>
+			<p class="state" role="status" aria-live="polite">No services have been added to this directory yet.</p>
 		{:else if status === 'no-results'}
-			<p class="state">No services match your search. Try a different term or category.</p>
+			<p class="state" role="status" aria-live="polite">No services match your search. Try a different term or category.</p>
 		{:else}
 			<p class="results-summary" role="status">{totalItems} {totalItems === 1 ? 'service' : 'services'} found</p>
 			<div class="listing-grid">
