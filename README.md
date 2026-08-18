@@ -41,6 +41,7 @@ Future places become additional hives only after the first hive is genuinely use
 - [Product foundation](docs/product-foundation.md)
 - [Content and category map](docs/content-taxonomy.md)
 - [Technical stack](docs/technical-stack.md)
+- [Website foundation implementation plan](docs/plans/2026-08-18-website-foundation-implementation.md)
 - [Manta + Manabí seed listing candidates](docs/research/manta-manabi-seed-listing-candidates.md)
 
 ## Status
