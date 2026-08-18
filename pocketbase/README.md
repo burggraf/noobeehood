@@ -31,3 +31,19 @@ Keep local data and migrations isolated under `pocketbase/`:
 
 Open <http://127.0.0.1:8090/_/> to create the first local superuser
 interactively. Do not commit the credentials.
+
+## Run the security check
+
+With PocketBase running locally and a temporary local superuser available, run
+from `web/` with the values supplied only in your shell environment:
+
+```sh
+PUBLIC_POCKETBASE_URL=http://127.0.0.1:8090 \
+PB_SUPERUSER_EMAIL='local-superuser@example.test' \
+PB_SUPERUSER_PASSWORD='use-your-local-password' \
+npm run test:pocketbase
+```
+
+Use only local, temporary credentials. The check creates and removes a unique
+test user; it does not print credentials or tokens. Do not put these values in
+committed files or shared logs.
