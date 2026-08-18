@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood 3A with hood underlined</title>
+  <desc id="desc">The Balanced Flight bee with an amber hood and a gold underline beneath hood.</desc>
+  <g transform="rotate(-8 190 180)">
+    <path d="M160 154C116 154 84 133 82 101C80 75 98 57 123 60C151 64 174 89 178 132L160 154Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M220 154C264 154 296 133 298 101C300 75 282 57 257 60C229 64 206 89 202 132L220 154Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M190 82L236 109V225L190 252L144 225V109L190 82Z" fill="#F6B800" stroke="#241F17" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M146 151H234M146 193H234" fill="none" stroke="#241F17" stroke-width="14"/>
+  </g>
+  <text x="380" y="214" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="100" letter-spacing="-3" aria-label="NooBeehood"><tspan fill="#241F17" font-weight="700">NooBee</tspan><tspan fill="#D97706" font-weight="500">hood</tspan></text>
+  <path d="M767 244H1015" fill="none" stroke="#F6B800" stroke-width="10" stroke-linecap="round"/>
+</svg>

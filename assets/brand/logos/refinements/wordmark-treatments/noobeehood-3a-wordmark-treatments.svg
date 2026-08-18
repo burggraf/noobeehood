@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1600 1650" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood 3A wordmark treatments</title>
+  <desc id="desc">Three underline placements paired with an amber hood: beneath NooBee, beneath hood, and beneath the full wordmark.</desc>
+  <rect width="1600" height="1650" fill="#FFF9E8"/>
+  <text x="80" y="62" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="36" font-weight="700">1 — Underline NooBee</text>
+  <image x="0" y="70" width="1600" height="480" xlink:href="noobeehood-3a-1-underline-noobee.svg"/>
+  <path d="M80 550H1520" stroke="#D97706" stroke-width="2"/>
+  <text x="80" y="612" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="36" font-weight="700">2 — Underline hood</text>
+  <image x="0" y="620" width="1600" height="480" xlink:href="noobeehood-3a-2-underline-hood.svg"/>
+  <path d="M80 1100H1520" stroke="#D97706" stroke-width="2"/>
+  <text x="80" y="1162" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="36" font-weight="700">3 — Underline full wordmark</text>
+  <image x="0" y="1170" width="1600" height="480" xlink:href="noobeehood-3a-3-underline-full.svg"/>
+</svg>
