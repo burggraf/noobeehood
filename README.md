@@ -40,8 +40,9 @@ Future places become additional hives only after the first hive is genuinely use
 - [Brand foundation](docs/brand-foundation.md)
 - [Product foundation](docs/product-foundation.md)
 - [Content and category map](docs/content-taxonomy.md)
+- [Technical stack](docs/technical-stack.md)
 - [Manta + Manabí seed listing candidates](docs/research/manta-manabi-seed-listing-candidates.md)
 
 ## Status
 
-Brand and product foundations only. The technical stack and implementation plan will be decided separately.
+Brand and product foundations plus an initial technical stack baseline. Implementation planning follows after the open decisions in [Technical stack](docs/technical-stack.md) are resolved.
