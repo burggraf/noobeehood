@@ -1,6 +1,6 @@
 # NooBeehood Technical Stack
 
-**Status:** Initial technical direction  
+**Status:** Local website foundation implemented; deployment configuration deferred
 **Scope:** Website-first foundation; native applications follow after the responsive website is useful  
 **Decision date:** 2026-08-14
 
@@ -8,6 +8,7 @@
 
 | Area | Decision | Version / policy |
 |---|---|---|
+| Developer runtime | Node.js | **20.19.0 or newer** |
 | Web UI | Svelte | **5.56.9** |
 | Web framework | SvelteKit | **2.70.2**, latest stable release selected; do not use SvelteKit 3 prereleases |
 | Backend | PocketBase | **v0.39.11**, latest stable release selected |
@@ -59,33 +60,72 @@ This rule applies to application code. PocketBase remains the remote backend ser
 
 ## PocketBase
 
-PocketBase is the backend service for the web and future native clients. Local development will use the pinned **v0.39.11** binary and a project-local data directory. The binary, data, and admin credentials must not be committed.
+PocketBase is the backend service for the web and future native clients. Local development uses the pinned **v0.39.11** binary, committed migrations, and a project-local ignored data directory. The binary, data, and superuser credentials are not committed. The implemented collections and exact authorization rules are documented in [Initial data model](data-model.md).
 
-Local setup is intentionally deferred until the application scaffold is created. The setup should add a documented start command and environment configuration, without replacing or sharing data with any other local or VPS PocketBase application.
+The local installer, isolated serve command, browser-client environment, and authorization security check are implemented and documented below. They do not replace or share data with any other local or VPS PocketBase application.
 
-Development will have separate local, staging, and production environments. Staging will use `staging.noobeehood.com` and `api-staging.noobeehood.com`; production will use `noobeehood.com` and `api.noobeehood.com`. Each environment must have separate configuration, PocketBase data, OAuth callbacks, email settings, and R2 paths or buckets as appropriate.
+Development will have separate local, staging, and production environments. Staging will use `staging.noobeehood.com` and `api-staging.noobeehood.com`; production will use `noobeehood.com` and `api.noobeehood.com`. Configuration for both deployed environments remains deferred. Each environment must have separate PocketBase data, OAuth callbacks, email settings, and R2 paths or buckets as appropriate.
 
-Production deployment will use a separate PocketBase process/service, database directory, logs, and domain or subdomain routing. PocketBase backups and file storage will use Cloudflare R2 through its S3-compatible configuration. The shared VPS must be inspected before deployment; no existing service may be stopped, reconfigured, or upgraded as part of this project without an explicit change plan.
+Production deployment will use a separate PocketBase process/service, database directory, logs, and domain or subdomain routing. PocketBase backups and file storage will use Cloudflare R2 through its S3-compatible configuration. The shared VPS must be inspected before deployment; no existing service may be stopped, reconfigured, or upgraded as part of this project without an explicit change plan. Production service, R2, and backup configuration are not implemented yet.
+
+## Local developer workflow
+
+Node.js **20.19.0 or newer** is required. From the repository root:
+
+```sh
+npm --prefix web ci
+./scripts/install-pocketbase.sh
+./pocketbase/pocketbase serve \
+  --dir=./pocketbase/pb_data \
+  --migrationsDir=./pocketbase/pb_migrations \
+  --http=127.0.0.1:8090
+```
+
+The data directory is ignored; the migration directory is committed. Open <http://127.0.0.1:8090/_/> and create the first local superuser in the dashboard. In another terminal:
+
+```sh
+cp web/.env.example web/.env
+npm --prefix web run dev
+```
+
+`web/.env` is ignored. Run the static validation from the repository root:
+
+```sh
+npm --prefix web run check
+npm --prefix web run build
+test -f web/build/200.html
+```
+
+For the authorization check, create a temporary local superuser in the dashboard and pass it only to the test process with safely prompted shell variables:
+
+```bash
+read -r -p 'Temporary PocketBase superuser email: ' PB_SUPERUSER_EMAIL
+read -r -s -p 'Temporary PocketBase superuser password: ' PB_SUPERUSER_PASSWORD
+printf '\n'
+PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \
+  PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" \
+  PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" \
+  npm --prefix web run test:pocketbase
+unset PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
+```
+
+Delete the temporary superuser afterward. The exact success line is `PocketBase security checks passed`. See [Local PocketBase](../pocketbase/README.md) for installer requirements and cleanup guidance.
 
 ## Authentication
 
-Required login methods:
+Email/password signup, mandatory email verification before password login, login, verification resend/confirmation, password reset/confirmation, logout, and account deletion are implemented against local PocketBase. Failed login and verification states are presented in the client. Google OAuth, Apple OAuth, production MFA policy, and deployed mail delivery are still required but explicitly deferred.
 
-1. Email and password.
-2. Google OAuth.
-3. Apple OAuth.
+OAuth callback URLs must eventually be defined separately for local development, website production, and each native platform. Production Google and Apple OAuth credentials will initially use personal developer accounts and should be migrated to dedicated NooBeehood organization accounts before public native release. Apple Sign In requires an Apple Developer configuration and should be tested on real Apple hardware before native release. OAuth credentials and secrets must remain in PocketBase/deployment configuration, never in the client bundle.
 
-Email/password requirements:
+Resend is planned to deliver verification and password-reset messages from `no-reply@noobeehood.com`. Resend and DNS domain-authentication configuration do not exist yet and must be completed before production email is enabled.
 
-- email verification is mandatory before login is accepted;
-- multi-factor authentication is mandatory for Beekeepers and PocketBase administrative accounts;
-- verification and password-reset email delivery must be configured;
-- failed login and verification states must be clear and accessible;
-- credentials and OAuth secrets must remain in PocketBase/server-side deployment configuration, never in the client bundle.
+### Approved client-only auth residuals
 
-OAuth callback URLs must be defined separately for local development, website production, and each native platform. Production Google and Apple OAuth credentials will initially use personal developer accounts and should be migrated to dedicated NooBeehood organization accounts before public native release. Apple Sign In requires an Apple Developer configuration and should be tested on real Apple hardware before native release.
+The PocketBase browser SDK's `LocalAuthStore` persists bearer authentication in browser storage. Logout clears that local auth state, but it is not server-side token revocation. This is an accepted residual of the current client-only, no-server-code architecture.
 
-Resend will deliver verification and password-reset messages from `no-reply@noobeehood.com`. Domain authentication records must be added to DNS before production email is enabled.
+Production must enforce a strong Content Security Policy and allow no untrusted scripts; those deployment protections are requirements, not protections that exist today. Revisit the session architecture only if the threat model requires server-side revocation or HttpOnly sessions, because either would change the current no-server-code decision.
+
+The implemented client sets a `no-referrer` policy and removes verification and password-reset tokens from the visible URL with `history.replaceState` before using them. These measures reduce URL-token exposure but do not alter the browser-storage residual above.
 
 ## Multi-tenancy and authorization
 
@@ -109,7 +149,7 @@ The data model must distinguish:
 - content ownership, moderation, publication, and audit history;
 - invitations, suspension, removal, and transfer of responsibility.
 
-Do not encode authorization as a single role field on the user record if users can belong to multiple hives. Prefer explicit membership records with tenant, user, role, status, and audit fields. Exact collections and permissions remain an implementation design task.
+Authorization is not encoded as a single role field on the user record. The initial `users`, `hives`, and explicit `memberships` collections and their PocketBase rules are implemented in a committed migration; see [Initial data model](data-model.md). Queen/Worker management beyond the current Beekeeper-only mutation rules remains a later authorization task.
 
 ## Responsive and accessibility baseline
 
@@ -141,9 +181,11 @@ Before deployment, inspect the VPS for existing PocketBase installations, revers
 
 ## Explicit non-goals for this phase
 
-- no native Tauri application yet;
-- no VPS deployment yet;
-- no PocketBase production configuration yet;
+- no native Tauri application or native configuration yet;
+- no VPS, staging, or production deployment yet;
+- no staging or production PocketBase configuration yet;
+- no Google or Apple OAuth configuration yet;
+- no Resend or Cloudflare R2 deployment configuration yet;
 - no server-side SvelteKit code;
 - no automatic dependency or PocketBase upgrades;
 - no premature abstraction for platform-specific APIs.

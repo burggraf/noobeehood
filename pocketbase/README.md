@@ -1,26 +1,20 @@
 # Local PocketBase
 
-This repository uses PocketBase v0.39.11 for local development. The binary is
-installed locally and is intentionally not committed.
+This repository uses PocketBase **v0.39.11** for local development. The version is pinned in `VERSION`; the installed binary, local data, and credentials are intentionally not committed. The committed migrations implement the schema documented in [docs/data-model.md](../docs/data-model.md).
 
-## Install
+## Complete local workflow
 
-From the repository root:
+Node.js **20.19.0 or newer** is required for the web client. From the repository root, install its exact locked dependencies and the pinned PocketBase binary:
 
 ```sh
+npm --prefix web ci
 ./scripts/install-pocketbase.sh
 ./pocketbase/pocketbase --version
 ```
 
-The installer selects the Darwin or Linux amd64/arm64 release, verifies its
-SHA-256 checksum, and installs only the `pocketbase` executable. It requires a
-POSIX shell plus `curl`, `mktemp`, `rm`, `shasum`, `uname`, and `unzip`. Linux
-systems must provide `shasum` (usually from the Perl package); the installer
-does not silently substitute an unverified checksum tool.
+The PocketBase installer selects the Darwin or Linux amd64/arm64 release, verifies its SHA-256 checksum, and installs only the `pocketbase` executable. It requires a POSIX shell plus `curl`, `mktemp`, `rm`, `shasum`, `uname`, and `unzip`. Linux systems must provide `shasum` (usually from the Perl package); the installer does not silently substitute an unverified checksum tool.
 
-## Serve locally
-
-Keep local data and migrations isolated under `pocketbase/`:
+Start PocketBase from the repository root in its own terminal:
 
 ```sh
 ./pocketbase/pocketbase serve \
@@ -29,25 +23,44 @@ Keep local data and migrations isolated under `pocketbase/`:
   --http=127.0.0.1:8090
 ```
 
-Open <http://127.0.0.1:8090/_/> to create the first local superuser
-interactively. Do not commit the credentials.
+The explicit data and migration paths isolate NooBeehood from every other local or deployed PocketBase application. Open <http://127.0.0.1:8090/_/> and create the first local superuser interactively in the dashboard. Use local-only credentials and do not commit them.
 
-## Run the security check
+In a second terminal, create the ignored web environment file and start Vite:
 
-With PocketBase running locally and a temporary local superuser available,
-run from `web/`. Enter credentials at prompts so the password is not saved in
-shell history:
-
-```bash
-read -r -p 'PocketBase superuser email: ' PB_SUPERUSER_EMAIL
-printf '\n'
-read -r -s -p 'PocketBase superuser password: ' PB_SUPERUSER_PASSWORD
-printf '\n'
-export PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090'
-export PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
-npm run test:pocketbase
+```sh
+cp web/.env.example web/.env
+npm --prefix web run dev
 ```
 
-Use only local, temporary credentials. The check creates and removes a unique
-test user; it does not print credentials or tokens. Do not put these values in
-committed files or shared logs.
+Run the type/static check and production build from the repository root:
+
+```sh
+npm --prefix web run check
+npm --prefix web run build
+test -f web/build/200.html
+```
+
+## Run the authorization security check
+
+With the isolated PocketBase instance running, create a temporary local superuser in the dashboard. Prompt for its credentials so the password is not saved in shell history, an environment file, or a shared log:
+
+```bash
+read -r -p 'Temporary PocketBase superuser email: ' PB_SUPERUSER_EMAIL
+read -r -s -p 'Temporary PocketBase superuser password: ' PB_SUPERUSER_PASSWORD
+printf '\n'
+PUBLIC_POCKETBASE_URL='http://127.0.0.1:8090' \
+  PB_SUPERUSER_EMAIL="$PB_SUPERUSER_EMAIL" \
+  PB_SUPERUSER_PASSWORD="$PB_SUPERUSER_PASSWORD" \
+  npm --prefix web run test:pocketbase
+unset PB_SUPERUSER_EMAIL PB_SUPERUSER_PASSWORD
+```
+
+The check reads only temporary process environment, creates and removes unique test users, and does not print credentials or tokens. Success is exactly:
+
+```text
+PocketBase security checks passed
+```
+
+Delete the temporary superuser from the local dashboard after the check. Never use staging or production credentials for this test.
+
+OAuth, staging and production PocketBase services, Resend email delivery, Cloudflare R2 storage/backups, and Tauri/native configuration are not part of this local setup and remain deferred.
