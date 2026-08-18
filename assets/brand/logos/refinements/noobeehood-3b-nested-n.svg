@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood Nested N logo refinement</title>
+  <desc id="desc">A simplified forward-tilted bee with an N integrated into its gold body and a single-color NooBeehood wordmark.</desc>
+  <g transform="rotate(-8 190 180)">
+    <path d="M163 159C121 158 91 139 88 109C85 82 103 65 128 67C154 70 175 94 179 135L163 159Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M217 159C259 158 289 139 292 109C295 82 277 65 252 67C226 70 205 94 201 135L217 159Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M190 80L238 108V224L190 252L142 224V108L190 80Z" fill="#F6B800" stroke="#241F17" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M160 159V123L220 159V123" fill="none" stroke="#FFFEF8" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M146 198H234" fill="none" stroke="#241F17" stroke-width="15"/>
+  </g>
+  <text x="380" y="214" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="100" letter-spacing="-3" aria-label="NooBeehood"><tspan font-weight="700">NooBee</tspan><tspan font-weight="500">hood</tspan></text>
+</svg>

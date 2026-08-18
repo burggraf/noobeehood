@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">NooBeehood Open Cell logo refinement</title>
+  <desc id="desc">A compact bee assembled from two open honeycomb wings and a subtly tilted gold body beside a single-color wordmark.</desc>
+  <g transform="rotate(-8 190 180)">
+    <path d="M124 72L170 98V151L124 177L78 151V98L124 72Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M256 72L302 98V151L256 177L210 151V98L256 72Z" fill="#FFF1B8" stroke="#241F17" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M190 82L236 109V225L190 252L144 225V109L190 82Z" fill="#F6B800" stroke="#241F17" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M146 151H234M146 193H234" fill="none" stroke="#241F17" stroke-width="14"/>
+  </g>
+  <text x="380" y="214" fill="#241F17" font-family="Avenir Next, Nunito Sans, sans-serif" font-size="100" letter-spacing="-3" aria-label="NooBeehood"><tspan font-weight="700">NooBee</tspan><tspan font-weight="500">hood</tspan></text>
+</svg>
