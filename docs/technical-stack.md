@@ -14,6 +14,9 @@
 | Native shell | Tauri | Tauri 2 line, to be selected and pinned when native work begins |
 | Web hosting | Static client application on `noobeehood.com` | Website-first |
 | Backend hosting | Self-hosted PocketBase on the shared VPS | Isolated service and data directory required |
+| Object storage and backups | Cloudflare R2 via PocketBase's S3-compatible settings | Backups and PocketBase file storage; daily/30-day plus weekly/12-month retention |
+| Email delivery | Resend | Sender: `no-reply@noobeehood.com` |
+| Environments | Local, staging, and production | Separate site/backend configuration and PocketBase data |
 | Source control | Git | Exact dependency versions and lockfiles are committed |
 
 Versions were checked against the official GitHub release endpoints on 2026-08-14:
@@ -60,7 +63,9 @@ PocketBase is the backend service for the web and future native clients. Local d
 
 Local setup is intentionally deferred until the application scaffold is created. The setup should add a documented start command and environment configuration, without replacing or sharing data with any other local or VPS PocketBase application.
 
-Production deployment will use a separate PocketBase process/service, database directory, logs, backups, and domain or subdomain routing. The shared VPS must be inspected before deployment; no existing service may be stopped, reconfigured, or upgraded as part of this project without an explicit change plan.
+Development will have separate local, staging, and production environments. Staging will use `staging.noobeehood.com` and `api-staging.noobeehood.com`; production will use `noobeehood.com` and `api.noobeehood.com`. Each environment must have separate configuration, PocketBase data, OAuth callbacks, email settings, and R2 paths or buckets as appropriate.
+
+Production deployment will use a separate PocketBase process/service, database directory, logs, and domain or subdomain routing. PocketBase backups and file storage will use Cloudflare R2 through its S3-compatible configuration. The shared VPS must be inspected before deployment; no existing service may be stopped, reconfigured, or upgraded as part of this project without an explicit change plan.
 
 ## Authentication
 
@@ -73,11 +78,14 @@ Required login methods:
 Email/password requirements:
 
 - email verification is mandatory before login is accepted;
+- multi-factor authentication is mandatory for Beekeepers and PocketBase administrative accounts;
 - verification and password-reset email delivery must be configured;
 - failed login and verification states must be clear and accessible;
 - credentials and OAuth secrets must remain in PocketBase/server-side deployment configuration, never in the client bundle.
 
-OAuth callback URLs must be defined separately for local development, website production, and each native platform. Apple Sign In requires an Apple Developer configuration and should be tested on real Apple hardware before native release.
+OAuth callback URLs must be defined separately for local development, website production, and each native platform. Production Google and Apple OAuth credentials will initially use personal developer accounts and should be migrated to dedicated NooBeehood organization accounts before public native release. Apple Sign In requires an Apple Developer configuration and should be tested on real Apple hardware before native release.
+
+Resend will deliver verification and password-reset messages from `no-reply@noobeehood.com`. Domain authentication records must be added to DNS before production email is enabled.
 
 ## Multi-tenancy and authorization
 
@@ -116,7 +124,7 @@ The website will be designed mobile-first and must remain usable at phone, table
 - usable loading, empty, offline, and error states;
 - localization-ready text and date/number formatting.
 
-The first responsive pass should be verified on representative iOS Safari, Android Chrome, desktop Chromium, Firefox, and Safari environments.
+The first responsive pass should be verified on representative iOS Safari, Android Chrome, desktop Chromium, Firefox, and Safari environments. The support baseline is the latest two versions of Chrome, Safari, Firefox, and Edge, including iOS Safari and Android Chrome. Future native apps will target the current and previous major OS versions for iOS, Android, macOS, and Windows at each release.
 
 ## Deployment direction
 
@@ -142,17 +150,19 @@ Before deployment, inspect the VPS for existing PocketBase installations, revers
 
 ## Decisions still needed
 
-These are the remaining product and operational decisions before implementation is finalized:
+The major stack decisions are now resolved:
 
-1. **Hive model:** Is a tenant always a geographic hive, or can organizations/private groups also be tenants?
-2. **Role scope:** Can a user hold different roles in different hives, and is “Beekeeper” global or assigned per organization?
-3. **Public access:** Which content is publicly readable without an account? Are search, guides, listings, and events all public?
-4. **Registration policy:** Is signup open, invite-only, or open with moderation for the first hive?
-5. **OAuth ownership:** Which Google Cloud project and Apple Developer account will own production OAuth credentials?
-6. **Email delivery:** Which transactional email provider and sending domain will deliver verification and reset messages?
-7. **Backend URL:** Should PocketBase use `api.noobeehood.com`, another subdomain, or a path behind the main domain?
-8. **Backups and recovery:** Where are encrypted backups stored, how often are they taken, and what recovery point/time targets are acceptable?
-9. **Support matrix:** Which OS/browser versions are supported for the website, and which native OS versions will be supported later?
-10. **Native release accounts:** Who owns the Apple App Store and Google Play developer accounts when Tauri work begins?
+- tenants are geographic hives for now; organizations/private groups may be added later;
+- roles are hive-scoped, while Beekeeper is a global platform-admin role;
+- discovery content is public; accounts are required to contribute, save, ask, or moderate;
+- registration is open;
+- Google and Apple OAuth initially use personal developer accounts;
+- Resend sends from `no-reply@noobeehood.com`;
+- PocketBase uses proxied `api.noobeehood.com`;
+- Cloudflare R2 stores files and backups, with daily 30-day and weekly 12-month retention;
+- the website supports the latest two versions of major browsers; native apps target current and previous major OS versions;
+- native distribution starts with personal developer accounts and later migrates to organization accounts;
+- users can delete accounts, with contributed content anonymized or retained as community content where appropriate;
+- local, staging, and production environments are separate, with staging at `staging.noobeehood.com` and `api-staging.noobeehood.com`.
 
-Until these are answered, the stack is documented as a technical baseline, not a complete production architecture.
+Operational details still to define during implementation include backup encryption and recovery testing, exact OAuth credentials, DNS records for staging, and the native release-account migration.
