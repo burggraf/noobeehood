@@ -33,7 +33,6 @@ migrate((app) => {
       { name: "search_terms", type: "text", max: 1000 },
       { name: "website", type: "url" },
       { name: "phone", type: "text", max: 80 },
-      { name: "email", type: "email", max: 254 },
       { name: "source_url", type: "url", required: true },
       {
         name: "verification_method",

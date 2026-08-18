@@ -1,0 +1,33 @@
+{
+  "hive_slug": "manta-manabi",
+  "search_cases": [
+    {
+      "query": "seafood",
+      "expected_slugs": [
+        "mercado-central-municipal"
+      ]
+    },
+    {
+      "query": "pharmacy",
+      "expected_slugs": [
+        "fybeca-malecon"
+      ]
+    },
+    {
+      "query": "dentist",
+      "expected_slugs": []
+    },
+    {
+      "query": "pet-friendly rental",
+      "expected_slugs": []
+    },
+    {
+      "query": "Guayaquil airport pickup",
+      "expected_slugs": []
+    },
+    {
+      "query": "whale watching",
+      "expected_slugs": []
+    }
+  ]
+}

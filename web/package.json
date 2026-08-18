@@ -16,8 +16,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:pocketbase": "node ../scripts/check-pocketbase.mjs",
-		"check:seeds": "python3 ../pocketbase/scripts/validate-seeds.py",
-		"seed:listings": "node ../pocketbase/scripts/import-listings.mjs"
+		"check:seeds": "node ../scripts/check-listing-seed.mjs",
+		"seed:listings": "node ../scripts/import-listings.mjs"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "3.0.10",
